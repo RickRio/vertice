@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VERTICE Collective · Agencia Disruptiva</title>
+  <!-- Google Fonts: Montserrat (reemplaza a Poppins) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET Y BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #01040A;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ===== CONTENEDOR PRINCIPAL ===== */
+    .vertice-site {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 1.5rem 2.5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* ===== NAVEGACIÓN ===== */
+    .main-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 0 2rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      flex-wrap: wrap;
+      gap: 1rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .logo-area {
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: #ffffff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo-area .gold {
+      color: #FDBB30;
+    }
+
+    .logo-area span {
+      font-weight: 300;
+      color: #888;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      font-weight: 500;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .nav-links a {
+      color: #aaa;
+      text-decoration: none;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: #FDBB30;
+    }
+
+    .nav-links a.active {
+      color: #FDBB30;
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #FDBB30;
+    }
+
+    /* ===== HERO / VIDEO DE FONDO ===== */
+    .hero-video-wrapper {
+      position: relative;
+      width: 100%;
+      margin: 2rem 0 3rem 0;
+      border-radius: 24px;
+      overflow: hidden;
+      aspect-ratio: 16 / 7;
+      background: #01040A;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      border: 1px solid rgba(253, 187, 48, 0.15);
+      cursor: pointer;
+      min-height: 300px;
+    }
+
+    .hero-video-wrapper .fallback-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 40%, #0a1a2e, #01040A);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1a2a3a;
+      font-size: 1.2rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      z-index: 0;
+    }
+
+    .hero-video-wrapper video {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      background: #01040A;
+      z-index: 1;
+    }
+
+    .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      background: rgba(253, 187, 48, 0.15);
+      backdrop-filter: blur(8px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(253, 187, 48, 0.3);
+      transition: all 0.3s ease;
+      z-index: 5;
+      pointer-events: none;
+      color: #FDBB30;
+      font-size: 2rem;
+    }
+
+    .hero-video-wrapper:hover .play-btn {
+      background: rgba(253, 187, 48, 0.25);
+      transform: translate(-50%, -50%) scale(1.05);
+      border-color: rgba(253, 187, 48, 0.5);
+    }
+
+    .play-btn.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      right: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      pointer-events: none;
+      background: linear-gradient(0deg, rgba(1,4,10,0.8) 0%, transparent 100%);
+      padding: 2rem 1rem 0.5rem 1rem;
+      border-radius: 0 0 24px 24px;
+      z-index: 3;
+    }
+
+    .hero-overlay .tag {
+      background: rgba(1,4,10,0.7);
+      backdrop-filter: blur(6px);
+      padding: 0.3rem 1.2rem;
+      border-radius: 40px;
+      border: 1px solid rgba(253, 187, 48, 0.15);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: #ddd;
+      text-transform: uppercase;
+    }
+
+    .hero-overlay .tag strong {
+      color: #FDBB30;
+      font-weight: 700;
+    }
+
+    /* ===== DIVISIONES (SERVICIOS) ===== */
+    .divisions-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin: 3rem 0 1.5rem 0;
+      border-bottom: 1px solid rgba(253, 187, 48, 0.1);
+      padding-bottom: 0.8rem;
+    }
+
+    .divisions-header h2 {
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: -0.02em;
+      color: #FDBB30;
+    }
+
+    .divisions-header .sub {
+      color: #555;
+      font-weight: 300;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+
+    .divisions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .division-card {
+      background: rgba(1,4,10,0.8);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .division-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .division-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(253, 187, 48, 0.2);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+    }
+
+    /* Colores de acento por división */
+    .division-card.studio::before { background: #FDBB30; }
+    .division-card.connect::before { background: #7FFFD4; }
+    .division-card.tech::before { background: #D900D9; }
+
+    .division-card .icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .division-card h3 {
+      font-weight: 800;
+      font-size: 1.2rem;
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.01em;
+    }
+
+    .division-card h3 .highlight {
+      font-weight: 300;
+      color: #666;
+      font-size: 0.8rem;
+    }
+
+    .division-card.studio h3 { color: #FDBB30; }
+    .division-card.connect h3 { color: #7FFFD4; }
+    .division-card.tech h3 { color: #D900D9; }
+
+    .division-card p {
+      color: #999;
+      font-size: 0.8rem;
+      font-weight: 300;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .division-card .badge {
+      display: inline-block;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .division-card.studio .badge { background: rgba(253, 187, 48, 0.1); color: #FDBB30; border-color: rgba(253, 187, 48, 0.15); }
+    .division-card.connect .badge { background: rgba(127, 255, 212, 0.05); color: #7FFFD4; border-color: rgba(127, 255, 212, 0.1); }
+    .division-card.tech .badge { background: rgba(217, 0, 217, 0.05); color: #D900D9; border-color: rgba(217, 0, 217, 0.1); }
+
+    /* ===== SECCIÓN ARCHIVES / WORKS ===== */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin: 2rem 0 1.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding-bottom: 0.8rem;
+    }
+
+    .section-header h2 {
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: -0.02em;
+      color: #FDBB30;
+    }
+
+    .section-header .year {
+      color: #555;
+      font-weight: 300;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .work-item {
+      background: rgba(1,4,10,0.8);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .work-item:hover {
+      transform: translateY(-6px);
+      border-color: rgba(253, 187, 48, 0.2);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+    }
+
+    .work-thumb {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: #0a1a2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1a2a3a;
+      font-size: 2.5rem;
+      font-weight: 300;
+      overflow: hidden;
+    }
+
+    .work-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .work-info {
+      padding: 1.2rem 1.2rem 1.5rem;
+    }
+
+    .work-info h4 {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.2rem;
+      letter-spacing: -0.01em;
+      color: #FDBB30;
+    }
+
+    .work-info p {
+      color: #777;
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .work-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.03);
+      padding: 0.1rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.6rem;
+      color: #666;
+      border: 1px solid rgba(255,255,255,0.05);
+      margin-top: 0.5rem;
+    }
+
+    /* ===== FOOTER ===== */
+    .vertice-footer {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.03);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.7rem;
+      color: #555;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .footer-col .label {
+      color: #2a3a4a;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+    }
+
+    .footer-col .value {
+      color: #888;
+      font-weight: 300;
+    }
+
+    .footer-col .value .gold { color: #FDBB30; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .vertice-site {
+        padding: 1rem 1.2rem;
+      }
+      .divisions-grid,
+      .works-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+      .nav-links {
+        gap: 1.2rem;
+        font-size: 0.7rem;
+      }
+      .logo-area {
+        font-size: 1.4rem;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .main-nav {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.8rem;
+      }
+      .nav-links {
+        justify-content: space-around;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      .divisions-grid,
+      .works-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-overlay {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        bottom: 1rem;
+        left: 1rem;
+        right: 1rem;
+      }
+      .hero-video-wrapper {
+        aspect-ratio: 16 / 9;
+        margin: 1rem 0;
+        min-height: 200px;
+      }
+      .vertice-footer {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+      .play-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="vertice-site">
+
+    <!-- ===== NAVEGACIÓN ===== -->
+    <nav class="main-nav">
+      <a href="index.html" class="logo-area">
+        VERTICE <span class="gold">●</span> <span>COLLECTIVE</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">INICIO</a></li>
+        <li><a href="vertice-studio.html">STUDIO</a></li>
+        <li><a href="vertice-connect.html">CONNECT</a></li>
+        <li><a href="vertice-tech.html">TECH</a></li>
+        <li><a href="#contacto">CONTACTO</a></li>
+      </ul>
+    </nav>
+
+    <!-- ===== VIDEO HERO ===== -->
+    <div class="hero-video-wrapper" id="videoContainer">
+      <div class="fallback-bg">VERTICE · PRODUCCIÓN</div>
+
+      <video
+        id="heroVideo"
+        muted
+        playsinline
+        preload="auto"
+        controlslist="nofullscreen nodownload noplaybackrate noremoteplayback"
+        disablepictureinpicture
+        disableremoteplayback
+        autoplay
+        loop
+      >
+        <source src="principal.mp4" type="video/mp4">
+        Tu navegador no soporta videos HTML5.
+      </video>
+
+      <div class="play-btn" id="playBtn">▶</div>
+
+      <div class="hero-overlay">
+        <span class="tag">🎬 · <strong>VERTICE STUDIO</strong> · PRODUCCIÓN AUDIOVISUAL</span>
+        <span class="tag">#DISRUPTIVOS · 2026</span>
+      </div>
+    </div>
+
+    <!-- ===== DIVISIONES ===== -->
+    <div class="divisions-header">
+      <h2>DIVISIONES</h2>
+      <span class="sub">EL PARAGUAS · VERTICE COLLECTIVE</span>
+    </div>
+
+    <div class="divisions-grid">
+      <!-- División 1: Studio (Oro) -->
+      <a href="vertice-studio.html" style="text-decoration: none; display: block;">
+        <div class="division-card studio">
+          <span class="icon">🎬</span>
+          <h3>VERTICE <span class="highlight">STUDIO</span></h3>
+          <p>Producción audiovisual de alto impacto. Spots, cine, video corporativo y contenido 360° para marcas que quieren romper esquemas.</p>
+          <span class="badge">PRODUCCIÓN · 4K</span>
+        </div>
+      </a>
+
+      <!-- División 2: Connect (Verde) -->
+      <a href="vertice-connect.html" style="text-decoration: none; display: block;">
+        <div class="division-card connect">
+          <span class="icon">📈</span>
+          <h3>VERTICE <span class="highlight">CONNECT</span></h3>
+          <p>SEO, Community Management y estrategia digital. Conectamos tu marca con audiencias reales a través de contenido orgánico y de pago.</p>
+          <span class="badge">SEO · SOCIAL</span>
+        </div>
+      </a>
+
+      <!-- División 3: Tech (Magenta) -->
+      <a href="vertice-tech.html" style="text-decoration: none; display: block;">
+        <div class="division-card tech">
+          <span class="icon">💻</span>
+          <h3>VERTICE <span class="highlight">TECH</span></h3>
+          <p>Desarrollo de apps, plataformas y soporte técnico. Transformamos ideas en productos digitales escalables y funcionales.</p>
+          <span class="badge">DEVELOPMENT · APPS</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- ===== SECCIÓN ARCHIVES / WORKS ===== -->
+    <div class="section-header">
+      <h2>ARCHIVES</h2>
+      <span class="year">2025 · PROYECTOS</span>
+    </div>
+
+    <div class="works-grid">
+      <div class="work-item">
+        <div class="work-thumb">
+          <img src="https://images.pexels.com/photos/66134/pexels-photo-66134.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Producción de video">
+        </div>
+        <div class="work-info">
+          <h4>SPOT · MARCAS</h4>
+          <p>Dirección · Postproducción</p>
+          <span class="work-tag">VERTICE STUDIO</span>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <div class="work-thumb">
+          <img src="https://images.pexels.com/photos/18045768/pexels-photo-18045768.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Fotografía de estudio">
+        </div>
+        <div class="work-info">
+          <h4>CAMPAÑA · FOTOGRAFÍA</h4>
+          <p>Art direction · Estudio</p>
+          <span class="work-tag">VERTICE STUDIO</span>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <div class="work-thumb">
+          <img src="https://images.pexels.com/photos/18045768/pexels-photo-18045768.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Manual de marca">
+        </div>
+        <div class="work-info">
+          <h4>MANUAL DE MARCA</h4>
+          <p>Identidad · Guías · Aplicaciones</p>
+          <span class="work-tag">VERTICE CONNECT</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="vertice-footer">
+      <div class="footer-col">
+        <span class="label">MATRIZ</span>
+        <span class="value">VERTICE <span class="gold">COLLECTIVE</span></span>
+      </div>
+      <div class="footer-col">
+        <span class="label">DIVISIONES</span>
+        <span class="value">STUDIO · CONNECT · TECH</span>
+      </div>
+      <div class="footer-col">
+        <span class="label">CONTACTO</span>
+        <span class="value">hola@vertice.co</span>
+      </div>
+      <div class="footer-col">
+        <span class="label">PALETA</span>
+        <span class="value" style="display:flex; gap:0.5rem; align-items:center;">
+          <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#01040A; border:1px solid #333;"></span>
+          <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#FDBB30;"></span>
+          <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#7FFFD4;"></span>
+          <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#D900D9;"></span>
+        </span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    (function() {
+      'use strict';
+
+      const video = document.getElementById('heroVideo');
+      const playBtn = document.getElementById('playBtn');
+      const container = document.getElementById('videoContainer');
+
+      let isPlaying = false;
+
+      function togglePlay() {
+        if (video.paused) {
+          video.play();
+          playBtn.classList.add('hidden');
+          isPlaying = true;
+        } else {
+          video.pause();
+          playBtn.classList.remove('hidden');
+          isPlaying = false;
+        }
+      }
+
+      container.addEventListener('click', function(e) {
+        if (e.target === playBtn || playBtn.contains(e.target)) {
+          return;
+        }
+        togglePlay();
+      });
+
+      playBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        togglePlay();
+      });
+
+      video.addEventListener('pause', function() {
+        playBtn.classList.remove('hidden');
+        isPlaying = false;
+      });
+
+      video.addEventListener('play', function() {
+        playBtn.classList.add('hidden');
+        isPlaying = true;
+      });
+
+      video.addEventListener('ended', function() {
+        playBtn.classList.remove('hidden');
+        isPlaying = false;
+        video.currentTime = 0;
+      });
+
+      video.play().then(() => {
+        playBtn.classList.add('hidden');
+        isPlaying = true;
+      }).catch(() => {
+        playBtn.classList.remove('hidden');
+        isPlaying = false;
+        console.log('Autoplay bloqueado, esperando interacción');
+      });
+
+      // Navegación activa
+      const navLinks = document.querySelectorAll('.nav-links a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+
+      console.log('VERTICE COLLECTIVE · Web cargada correctamente');
+    })();
+  </script>
+</body>
+</html>

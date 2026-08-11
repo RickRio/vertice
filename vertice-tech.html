@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vertice Tech · Desarrollo & Apps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET Y BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #01040A;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ===== CONTENEDOR PRINCIPAL ===== */
+        .vertice-tech {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2.5rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== HEADER / NAV ===== */
+        .tech-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0 2rem 0;
+            border-bottom: 1px solid rgba(217, 0, 217, 0.08);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-tech {
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            color: #D900D9;
+        }
+
+        .logo-tech span {
+            font-weight: 300;
+            color: #666;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+        }
+
+        .nav-tech {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            font-weight: 500;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .nav-tech a {
+            color: #888;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-tech a:hover,
+        .nav-tech a.active {
+            color: #D900D9;
+        }
+
+        .nav-tech a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #D900D9;
+        }
+
+        /* ===== HERO ===== */
+        .hero-tech {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            padding: 2rem 0 3rem 0;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            color: #D900D9;
+        }
+
+        .hero-content h1 small {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #666;
+            letter-spacing: 0.2em;
+            margin-top: 0.5rem;
+        }
+
+        .hero-content .tagline {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #aaa;
+            margin: 1.5rem 0 2rem 0;
+            line-height: 1.8;
+            max-width: 480px;
+        }
+
+        .hero-content .tagline strong {
+            color: #D900D9;
+            font-weight: 600;
+        }
+
+        .hero-content .cta-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-content .cta-primary {
+            display: inline-block;
+            background: #D900D9;
+            color: #ffffff;
+            padding: 0.8rem 2.5rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border: 2px solid #D900D9;
+        }
+
+        .hero-content .cta-primary:hover {
+            background: transparent;
+            color: #D900D9;
+        }
+
+        .hero-content .cta-secondary {
+            display: inline-block;
+            background: transparent;
+            color: #888;
+            padding: 0.8rem 2.5rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .hero-content .cta-secondary:hover {
+            border-color: #D900D9;
+            color: #D900D9;
+        }
+
+        .hero-video {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            aspect-ratio: 16 / 10;
+            background: #0a1a2e;
+            border: 1px solid rgba(217, 0, 217, 0.1);
+            cursor: pointer;
+        }
+
+        .hero-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-video .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: rgba(217, 0, 217, 0.15);
+            backdrop-filter: blur(6px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(217, 0, 217, 0.3);
+            color: #D900D9;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .hero-video:hover .play-overlay {
+            background: rgba(217, 0, 217, 0.25);
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+
+        .hero-video .play-overlay.hidden {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.8);
+        }
+
+        /* ===== SECCIÓN EXPERTISE (estilo HELLO) ===== */
+        .expertise-section {
+            padding: 3rem 0;
+            border-top: 1px solid rgba(217, 0, 217, 0.05);
+            border-bottom: 1px solid rgba(217, 0, 217, 0.05);
+            margin: 1rem 0;
+        }
+
+        .expertise-section .expertise-title {
+            font-size: 0.7rem;
+            font-weight: 300;
+            color: #555;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .expertise-section .expertise-title strong {
+            color: #D900D9;
+            font-weight: 600;
+        }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .expertise-item {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            background: rgba(217, 0, 217, 0.02);
+            border-radius: 16px;
+            border: 1px solid rgba(217, 0, 217, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .expertise-item:hover {
+            background: rgba(217, 0, 217, 0.04);
+            border-color: rgba(217, 0, 217, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .expertise-item .icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .expertise-item h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #D900D9;
+            margin-bottom: 0.3rem;
+        }
+
+        .expertise-item p {
+            font-size: 0.7rem;
+            color: #777;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* ===== SECCIÓN CASOS DE ÉXITO ===== */
+        .cases-section {
+            padding: 3rem 0;
+        }
+
+        .cases-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(217, 0, 217, 0.05);
+            padding-bottom: 0.8rem;
+        }
+
+        .cases-header h2 {
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #D900D9;
+            letter-spacing: -0.02em;
+        }
+
+        .cases-header .sub {
+            color: #555;
+            font-size: 0.75rem;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .case-item {
+            background: rgba(1, 4, 10, 0.6);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(217, 0, 217, 0.03);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .case-item:hover {
+            transform: translateY(-6px);
+            border-color: rgba(217, 0, 217, 0.1);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .case-thumb {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #0a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #1a2a3a;
+            overflow: hidden;
+        }
+
+        .case-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .case-info {
+            padding: 1rem 1.2rem 1.5rem;
+        }
+
+        .case-info h4 {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #D900D9;
+            margin-bottom: 0.2rem;
+        }
+
+        .case-info p {
+            color: #666;
+            font-size: 0.7rem;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+
+        .case-info .case-tag {
+            display: inline-block;
+            background: rgba(217, 0, 217, 0.05);
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            color: #888;
+            border: 1px solid rgba(217, 0, 217, 0.05);
+            margin-top: 0.5rem;
+        }
+
+        /* ===== SECCIÓN CONTACTO ===== */
+        .contact-section {
+            padding: 2rem 0 3rem 0;
+            border-top: 1px solid rgba(217, 0, 217, 0.05);
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .contact-section h3 {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #D900D9;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-section p {
+            color: #666;
+            font-size: 0.8rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-section .contact-btn {
+            display: inline-block;
+            background: #D900D9;
+            color: #ffffff;
+            padding: 0.8rem 3rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border: 2px solid #D900D9;
+        }
+
+        .contact-section .contact-btn:hover {
+            background: transparent;
+            color: #D900D9;
+        }
+
+        /* ===== FOOTER ===== */
+        .tech-footer {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(217, 0, 217, 0.03);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.65rem;
+            color: #444;
+        }
+
+        .tech-footer .copy {
+            color: #555;
+        }
+
+        .tech-footer .social {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .tech-footer .social a {
+            color: #555;
+            transition: color 0.3s;
+            letter-spacing: 0.05em;
+        }
+
+        .tech-footer .social a:hover {
+            color: #D900D9;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-tech {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 1rem 0;
+            }
+            .hero-content h1 {
+                font-size: 3.2rem;
+            }
+            .expertise-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .cases-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .vertice-tech {
+                padding: 1rem 1.2rem;
+            }
+            .tech-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.8rem;
+            }
+            .nav-tech {
+                justify-content: space-around;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .hero-content .tagline {
+                font-size: 0.9rem;
+            }
+            .expertise-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+            }
+            .cases-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            .hero-content .cta-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .tech-footer {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            .expertise-item {
+                padding: 1rem 0.5rem;
+            }
+            .expertise-item .icon {
+                font-size: 1.8rem;
+            }
+            .expertise-item h4 {
+                font-size: 0.75rem;
+            }
+            .expertise-item p {
+                font-size: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="vertice-tech">
+
+        <!-- ===== HEADER ===== -->
+        <header class="tech-header">
+            <div class="logo-tech">
+                VERTICE <span>TECH</span>
+            </div>
+            <ul class="nav-tech">
+                <li><a href="#" class="active">INICIO</a></li>
+                <li><a href="#">DESARROLLO</a></li>
+                <li><a href="#">APPS</a></li>
+                <li><a href="#">SOPORTE</a></li>
+                <li><a href="#">CONTACTO</a></li>
+            </ul>
+        </header>
+
+        <!-- ===== HERO ===== -->
+        <section class="hero-tech">
+            <div class="hero-content">
+                <h1>
+                    TECH
+                    <small>DESARROLLO · APPS · SOPORTE</small>
+                </h1>
+                <p class="tagline">
+                    Soluciones tecnológicas personalizadas para <strong>grandes proyectos</strong>.<br>
+                    Desarrollo web, apps móviles y soporte técnico con <strong>inteligencia</strong> y <strong>código</strong>.
+                </p>
+                <div class="cta-group">
+                    <a href="#" class="cta-primary">Ver proyectos</a>
+                    <a href="#" class="cta-secondary">Contactar</a>
+                </div>
+            </div>
+            <div class="hero-video" id="videoContainer">
+                <video 
+                    id="heroVideo"
+                    muted
+                    playsinline
+                    preload="auto"
+                    controlslist="nofullscreen nodownload noplaybackrate noremoteplayback"
+                    disablepictureinpicture
+                    disableremoteplayback
+                >
+                    <source src="connect_1.mp4" type="video/mp4">
+                    Tu navegador no soporta videos HTML5.
+                </video>
+                <div class="play-overlay" id="playBtn">▶</div>
+            </div>
+        </section>
+
+        <!-- ===== SECCIÓN EXPERTISE ===== -->
+        <section class="expertise-section">
+            <div class="expertise-title"><strong>Vertice Tech</strong> · Expertise & Desarrollo</div>
+            <div class="expertise-grid">
+                <div class="expertise-item">
+                    <span class="icon">💻</span>
+                    <h4>Desarrollo Web</h4>
+                    <p>Frontend · Backend · CMS · E-commerce</p>
+                </div>
+                <div class="expertise-item">
+                    <span class="icon">📱</span>
+                    <h4>Apps Móviles</h4>
+                    <p>iOS · Android · React Native · Flutter</p>
+                </div>
+                <div class="expertise-item">
+                    <span class="icon">☁️</span>
+                    <h4>Cloud & DevOps</h4>
+                    <p>AWS · Azure · CI/CD · Escalabilidad</p>
+                </div>
+                <div class="expertise-item">
+                    <span class="icon">🛠️</span>
+                    <h4>Soporte Técnico</h4>
+                    <p>Mantenimiento · Auditoría · Seguridad</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECCIÓN CASOS DE ÉXITO ===== -->
+        <section class="cases-section">
+            <div class="cases-header">
+                <h2>CASOS DE ÉXITO</h2>
+                <span class="sub">PROYECTOS DESTACADOS · 2025</span>
+            </div>
+            <div class="cases-grid">
+                <div class="case-item">
+                    <div class="case-thumb">
+                        <img src="https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=600" alt="E-commerce">
+                    </div>
+                    <div class="case-info">
+                        <h4>E-COMMERCE</h4>
+                        <p>Plataforma de ventas con IA</p>
+                        <span class="case-tag">VERTICE TECH</span>
+                    </div>
+                </div>
+                <div class="case-item">
+                    <div class="case-thumb">
+                        <img src="https://images.pexels.com/photos/2882552/pexels-photo-2882552.jpeg?auto=compress&cs=tinysrgb&w=600" alt="App móvil">
+                    </div>
+                    <div class="case-info">
+                        <h4>APP MÓVIL</h4>
+                        <p>Streaming · React Native</p>
+                        <span class="case-tag">VERTICE TECH</span>
+                    </div>
+                </div>
+                <div class="case-item">
+                    <div class="case-thumb">
+                        <img src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Soporte">
+                    </div>
+                    <div class="case-info">
+                        <h4>SOPORTE TÉCNICO</h4>
+                        <p>Auditoría · Seguridad · Mantenimiento</p>
+                        <span class="case-tag">VERTICE TECH</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECCIÓN CONTACTO ===== -->
+        <section class="contact-section">
+            <h3>¿Listo para transformar tu negocio?</h3>
+            <p>Desarrollo, apps y soporte con la mejor tecnología.</p>
+            <a href="#" class="contact-btn">Contactar ahora</a>
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="tech-footer">
+            <span class="copy">© 2026 Vertice Tech · Desarrollo & Apps</span>
+            <div class="social">
+                <a href="#">IG</a>
+                <a href="#">GITHUB</a>
+                <a href="#">LINKEDIN</a>
+                <a href="#">YOUTUBE</a>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ===== CONTROL DE VIDEO =====
+            const video = document.getElementById('heroVideo');
+            const playBtn = document.getElementById('playBtn');
+            const container = document.getElementById('videoContainer');
+
+            let isPlaying = false;
+
+            function togglePlay() {
+                if (video.paused) {
+                    video.play();
+                    playBtn.classList.add('hidden');
+                    isPlaying = true;
+                } else {
+                    video.pause();
+                    playBtn.classList.remove('hidden');
+                    isPlaying = false;
+                }
+            }
+
+            container.addEventListener('click', function(e) {
+                if (e.target === playBtn || playBtn.contains(e.target)) {
+                    return;
+                }
+                togglePlay();
+            });
+
+            playBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                togglePlay();
+            });
+
+            video.addEventListener('pause', function() {
+                playBtn.classList.remove('hidden');
+                isPlaying = false;
+            });
+
+            video.addEventListener('play', function() {
+                playBtn.classList.add('hidden');
+                isPlaying = true;
+            });
+
+            video.addEventListener('ended', function() {
+                playBtn.classList.remove('hidden');
+                isPlaying = false;
+                video.currentTime = 0;
+            });
+
+            // Intento de autoplay
+            video.play().then(() => {
+                playBtn.classList.add('hidden');
+                isPlaying = true;
+            }).catch(() => {
+                playBtn.classList.remove('hidden');
+                isPlaying = false;
+                console.log('Autoplay bloqueado, esperando interacción');
+            });
+
+            // ===== NAVEGACIÓN ACTIVA =====
+            const navLinks = document.querySelectorAll('.nav-tech a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // ===== EFECTOS HOVER =====
+            const items = document.querySelectorAll('.expertise-item, .case-item');
+            items.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transition = 'all 0.25s ease';
+                });
+            });
+
+            console.log('Vertice Tech · Web cargada correctamente');
+        })();
+    </script>
+</body>
+</html>

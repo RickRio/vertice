@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vertice Studio · Producción Audiovisual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET Y BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #01040A;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ===== CONTENEDOR PRINCIPAL ===== */
+    .vertice-studio {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem 2.5rem;
+    }
+
+    /* ===== HEADER / NAV ===== */
+    .studio-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0 2rem 0;
+      border-bottom: 1px solid rgba(253, 187, 48, 0.08);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo-studio {
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #FDBB30;
+    }
+
+    .logo-studio span {
+      font-weight: 300;
+      color: #666;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+    }
+
+    .nav-studio {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      font-weight: 500;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .nav-studio a {
+      color: #888;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    .nav-studio a:hover,
+    .nav-studio a.active {
+      color: #FDBB30;
+    }
+
+    .nav-studio a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #FDBB30;
+    }
+
+    /* ===== HERO ===== */
+    .hero-studio {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      padding: 3rem 0 4rem 0;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-size: 4.5rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: #FDBB30;
+    }
+
+    .hero-content h1 small {
+      display: block;
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: #666;
+      letter-spacing: 0.2em;
+      margin-top: 0.5rem;
+    }
+
+    .hero-content .tagline {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: #aaa;
+      margin: 1.5rem 0 2rem 0;
+      line-height: 1.6;
+      max-width: 450px;
+    }
+
+    .hero-content .tagline strong {
+      color: #FDBB30;
+      font-weight: 600;
+    }
+
+    .hero-content .cta {
+      display: inline-block;
+      background: #FDBB30;
+      color: #01040A;
+      padding: 0.8rem 2.5rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      border: 2px solid #FDBB30;
+    }
+
+    .hero-content .cta:hover {
+      background: transparent;
+      color: #FDBB30;
+    }
+
+    .hero-video {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      background: #0a1a2e;
+      border: 1px solid rgba(253, 187, 48, 0.1);
+      cursor: pointer;
+    }
+
+    .hero-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-video .play-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 70px;
+      height: 70px;
+      background: rgba(253, 187, 48, 0.15);
+      backdrop-filter: blur(6px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(253, 187, 48, 0.3);
+      color: #FDBB30;
+      font-size: 1.8rem;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .hero-video:hover .play-overlay {
+      background: rgba(253, 187, 48, 0.25);
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+
+    .hero-video .play-overlay.hidden {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+
+    /* ===== SECCIÓN "REDEFINING LIMITS" ===== */
+    .redefining-section {
+      padding: 4rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      margin: 2rem 0;
+    }
+
+    .redefining-section blockquote {
+      font-size: 2.2rem;
+      font-weight: 300;
+      line-height: 1.4;
+      color: #ddd;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      font-style: italic;
+    }
+
+    .redefining-section blockquote strong {
+      color: #FDBB30;
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    .redefining-section .meta {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: #555;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ===== GALERÍA DE PROYECTOS (estilo Hall of Fame) ===== */
+    .projects-section {
+      padding: 3rem 0;
+    }
+
+    .projects-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(253, 187, 48, 0.05);
+      padding-bottom: 0.8rem;
+    }
+
+    .projects-header h2 {
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: #FDBB30;
+      letter-spacing: -0.02em;
+    }
+
+    .projects-header .sub {
+      color: #555;
+      font-size: 0.75rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .project-item {
+      background: rgba(1, 4, 10, 0.6);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .project-item:hover {
+      transform: translateY(-6px);
+      border-color: rgba(253, 187, 48, 0.15);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .project-thumb {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #0a1a2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: #1a2a3a;
+      overflow: hidden;
+    }
+
+    .project-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .project-info {
+      padding: 1rem 1rem 1.2rem;
+    }
+
+    .project-info h4 {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #FDBB30;
+      margin-bottom: 0.1rem;
+    }
+
+    .project-info p {
+      color: #666;
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ===== SECCIÓN "PARTNERS" ===== */
+    .partners-section {
+      padding: 3rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+      margin-top: 2rem;
+    }
+
+    .partners-section h3 {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #FDBB30;
+      text-align: center;
+      margin-bottom: 2rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .partners-grid {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .partner-item {
+      color: #555;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 40px;
+      transition: all 0.3s ease;
+    }
+
+    .partner-item:hover {
+      color: #FDBB30;
+      border-color: rgba(253, 187, 48, 0.1);
+    }
+
+    /* ===== FOOTER ===== */
+    .studio-footer {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.7rem;
+      color: #444;
+    }
+
+    .studio-footer .copy {
+      color: #555;
+    }
+
+    .studio-footer .social {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .studio-footer .social a {
+      color: #555;
+      transition: color 0.3s;
+      letter-spacing: 0.05em;
+    }
+
+    .studio-footer .social a:hover {
+      color: #FDBB30;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .hero-studio {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2rem 0;
+      }
+      .hero-content h1 {
+        font-size: 3.5rem;
+      }
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .vertice-studio {
+        padding: 1rem 1.2rem;
+      }
+      .studio-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.8rem;
+      }
+      .nav-studio {
+        justify-content: space-around;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      .hero-content h1 {
+        font-size: 2.8rem;
+      }
+      .redefining-section blockquote {
+        font-size: 1.5rem;
+      }
+      .redefining-section .meta {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .projects-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+      .partners-grid {
+        gap: 1rem;
+      }
+      .studio-footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+      .hero-content .tagline {
+        font-size: 0.95rem;
+      }
+      .hero-video {
+        aspect-ratio: 16 / 9;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="vertice-studio">
+
+    <!-- ===== HEADER ===== -->
+    <header class="studio-header">
+      <div class="logo-studio">
+        VERTICE <span>STUDIO</span>
+      </div>
+      <ul class="nav-studio">
+        <li><a href="#" class="active">INICIO</a></li>
+        <li><a href="#">PROYECTOS</a></li>
+        <li><a href="#">EQUIPO</a></li>
+        <li><a href="#">CONTACTO</a></li>
+      </ul>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero-studio">
+      <div class="hero-content">
+        <h1>
+          STUDIO<br>
+          <small>PRODUCCIÓN AUDIOVISUAL</small>
+        </h1>
+        <p class="tagline">
+          Redefiniendo los límites de la <strong>producción</strong>.<br>
+          Spots, cine, contenido 360° y estrategias visuales que <strong>impactan</strong>.
+        </p>
+        <a href="#" class="cta">Ver proyectos</a>
+      </div>
+      <div class="hero-video" id="videoContainer">
+        <video 
+          id="heroVideo"
+          muted
+          playsinline
+          preload="auto"
+          controlslist="nofullscreen nodownload noplaybackrate noremoteplayback"
+          disablepictureinpicture
+          disableremoteplayback
+        >
+          <source src="connect_2.mp4" type="video/mp4">
+          Tu navegador no soporta videos HTML5.
+        </video>
+        <div class="play-overlay" id="playBtn">▶</div>
+      </div>
+    </section>
+
+    <!-- ===== SECCIÓN "REDEFINING LIMITS" ===== -->
+    <section class="redefining-section">
+      <blockquote>
+        «No importa dónde empieces, <strong>importa cómo progresas</strong> a partir de ahí.»
+      </blockquote>
+      <div class="meta">
+        <span>V Studio · 2026</span>
+        <span>Producción · Dirección · Post</span>
+        <span>#DISRUPTIVOS</span>
+      </div>
+    </section>
+
+    <!-- ===== GALERÍA DE PROYECTOS ===== -->
+    <section class="projects-section">
+      <div class="projects-header">
+        <h2>PROYECTOS</h2>
+        <span class="sub">HALL OF FRAME · 2025</span>
+      </div>
+      <div class="projects-grid">
+        <div class="project-item">
+          <div class="project-thumb">
+            <img src="https://images.pexels.com/photos/66134/pexels-photo-66134.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Spot">
+          </div>
+          <div class="project-info">
+            <h4>SPOT · MARCAS</h4>
+            <p>Dirección · Postproducción</p>
+          </div>
+        </div>
+        <div class="project-item">
+          <div class="project-thumb">
+            <img src="https://images.pexels.com/photos/18045768/pexels-photo-18045768.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Campaña">
+          </div>
+          <div class="project-info">
+            <h4>CAMPAÑA · FOTOGRAFÍA</h4>
+            <p>Art direction · Estudio</p>
+          </div>
+        </div>
+        <div class="project-item">
+          <div class="project-thumb">
+            <img src="https://images.pexels.com/photos/38271/pexels-photo-38271.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Cine">
+          </div>
+          <div class="project-info">
+            <h4>CORTOMETRAJE</h4>
+            <p>Dirección · Producción</p>
+          </div>
+        </div>
+        <div class="project-item">
+          <div class="project-thumb">
+            <img src="https://images.pexels.com/photos/1570171/pexels-photo-1570171.jpeg?auto=compress&cs=tinysrgb&w=600" alt="360">
+          </div>
+          <div class="project-info">
+            <h4>VIDEO 360°</h4>
+            <p>Realidad virtual · Experiencia</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PARTNERS ===== -->
+    <section class="partners-section">
+      <h3>PARTNERS & CAMPAÑAS</h3>
+      <div class="partners-grid">
+        <span class="partner-item">Vertice Collective</span>
+        <span class="partner-item">Vertice Connect</span>
+        <span class="partner-item">Vertice Tech</span>
+        <span class="partner-item">Brand Lab</span>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="studio-footer">
+      <span class="copy">© 2026 Vertice Studio · Producción Audiovisual</span>
+      <div class="social">
+        <a href="#">IG</a>
+        <a href="#">VIMEO</a>
+        <a href="#">LINKEDIN</a>
+        <a href="#">YOUTUBE</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    (function() {
+      'use strict';
+
+      const video = document.getElementById('heroVideo');
+      const playBtn = document.getElementById('playBtn');
+      const container = document.getElementById('videoContainer');
+
+      let isPlaying = false;
+
+      function togglePlay() {
+        if (video.paused) {
+          video.play();
+          playBtn.classList.add('hidden');
+          isPlaying = true;
+        } else {
+          video.pause();
+          playBtn.classList.remove('hidden');
+          isPlaying = false;
+        }
+      }
+
+      container.addEventListener('click', function(e) {
+        if (e.target === playBtn || playBtn.contains(e.target)) {
+          return;
+        }
+        togglePlay();
+      });
+
+      playBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        togglePlay();
+      });
+
+      video.addEventListener('pause', function() {
+        playBtn.classList.remove('hidden');
+        isPlaying = false;
+      });
+
+      video.addEventListener('play', function() {
+        playBtn.classList.add('hidden');
+        isPlaying = true;
+      });
+
+      video.addEventListener('ended', function() {
+        playBtn.classList.remove('hidden');
+        isPlaying = false;
+        video.currentTime = 0;
+      });
+
+      video.play().then(() => {
+        playBtn.classList.add('hidden');
+        isPlaying = true;
+      }).catch(() => {
+        playBtn.classList.remove('hidden');
+        isPlaying = false;
+        console.log('Autoplay bloqueado, esperando interacción');
+      });
+
+      // Navegación activa
+      const navLinks = document.querySelectorAll('.nav-studio a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          navLinks.forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+
+      console.log('Vertice Studio · Web cargada');
+    })();
+  </script>
+</body>
+</html>
