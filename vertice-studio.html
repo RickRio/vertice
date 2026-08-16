@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vertice Studio · Producción Audiovisual</title>
+  <!-- Google Fonts: Fuentes populares -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400;1,500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* ===== RESET Y BASE ===== */
     * {
@@ -18,8 +19,9 @@
     body {
       background: #01040A;
       color: #ffffff;
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Inter', sans-serif;
       overflow-x: hidden;
+      cursor: default;
     }
 
     a {
@@ -100,6 +102,7 @@
       font-weight: 900;
       letter-spacing: -0.03em;
       color: #FDBB30;
+      font-family: 'Outfit', sans-serif;
     }
 
     .logo-studio span {
@@ -117,10 +120,11 @@
       font-size: 0.75rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      font-family: 'Inter', sans-serif;
     }
 
     .nav-studio a {
-      color: #888;
+      color: #ffffff;
       transition: color 0.3s;
       position: relative;
     }
@@ -155,6 +159,7 @@
       line-height: 1;
       letter-spacing: -0.03em;
       color: #FDBB30;
+      font-family: 'Outfit', sans-serif;
     }
 
     .hero-content h1 small {
@@ -164,15 +169,17 @@
       color: #666;
       letter-spacing: 0.2em;
       margin-top: 0.5rem;
+      font-family: 'Inter', sans-serif;
     }
 
     .hero-content .tagline {
       font-size: 1.1rem;
       font-weight: 400;
-      color: #aaa;
+      color: #cccccc;
       margin: 1.5rem 0 2rem 0;
       line-height: 1.6;
       max-width: 450px;
+      font-family: 'Inter', sans-serif;
     }
 
     .hero-content .tagline strong {
@@ -192,6 +199,7 @@
       text-transform: uppercase;
       transition: all 0.3s ease;
       border: 2px solid #FDBB30;
+      font-family: 'Inter', sans-serif;
     }
 
     .hero-content .cta:hover {
@@ -263,6 +271,7 @@
       margin: 0 auto;
       text-align: center;
       font-style: italic;
+      font-family: 'Inter', sans-serif;
     }
 
     .redefining-section blockquote strong {
@@ -280,6 +289,7 @@
       color: #555;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      font-family: 'Inter', sans-serif;
     }
 
     /* ===== SERVICIOS CON GIFs ===== */
@@ -299,13 +309,15 @@
       font-size: 2rem;
       color: #FDBB30;
       letter-spacing: -0.02em;
+      font-family: 'Outfit', sans-serif;
     }
 
     .services-section .services-header p {
-      color: #666;
+      color: #888;
       font-size: 0.9rem;
       font-weight: 300;
       margin-top: 0.5rem;
+      font-family: 'Inter', sans-serif;
     }
 
     .services-grid {
@@ -345,14 +357,16 @@
       font-size: 1rem;
       color: #FDBB30;
       margin-bottom: 0.3rem;
+      font-family: 'Outfit', sans-serif;
     }
 
     .service-card p {
       font-size: 0.75rem;
-      color: #777;
+      color: #999;
       font-weight: 300;
       line-height: 1.6;
       margin-bottom: 1rem;
+      font-family: 'Inter', sans-serif;
     }
 
     .service-card .service-link {
@@ -367,6 +381,7 @@
       transition: all 0.3s ease;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      font-family: 'Inter', sans-serif;
     }
 
     .service-card .service-link:hover {
@@ -374,9 +389,33 @@
       border-color: rgba(253, 187, 48, 0.1);
     }
 
-    /* ===== VISTA PREVIA DEL REPOSITORIO (estilo Pinterest) ===== */
+    /* ===== VISTA PREVIA DEL REPOSITORIO (con fondo astro.gif) ===== */
     .repo-preview-section {
-      padding: 3rem 0;
+      padding: 4rem 0;
+      position: relative;
+      background-image: url('astro.gif');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      border-radius: 24px;
+      margin: 2rem 0;
+      overflow: hidden;
+    }
+
+    .repo-preview-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(1, 4, 10, 0.75);
+      z-index: 0;
+    }
+
+    .repo-preview-section>* {
+      position: relative;
+      z-index: 1;
     }
 
     .repo-preview-header {
@@ -395,6 +434,7 @@
       font-size: 1.8rem;
       color: #FDBB30;
       letter-spacing: -0.02em;
+      font-family: 'Outfit', sans-serif;
     }
 
     .repo-preview-header .repo-link {
@@ -409,6 +449,7 @@
       transition: all 0.3s ease;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      font-family: 'Inter', sans-serif;
     }
 
     .repo-preview-header .repo-link:hover {
@@ -474,6 +515,7 @@
       border: 1px solid rgba(253, 187, 48, 0.05);
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      font-family: 'Inter', sans-serif;
     }
 
     .repo-preview-item .preview-info {
@@ -483,16 +525,55 @@
     .repo-preview-item .preview-info h4 {
       font-weight: 600;
       font-size: 0.85rem;
-      color: #ddd;
+      color: #ffffff;
       margin-bottom: 0.1rem;
+      font-family: 'Outfit', sans-serif;
     }
 
     .repo-preview-item .preview-info p {
       font-size: 0.6rem;
-      color: #666;
+      color: #888;
       font-weight: 300;
       letter-spacing: 0.05em;
       text-transform: uppercase;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ===== CURSOR PERSONALIZADO ===== */
+    .custom-cursor {
+      position: fixed;
+      pointer-events: none;
+      z-index: 999;
+      background: rgba(253, 187, 48, 0.02);
+      border: 1px solid rgba(253, 187, 48, 0.05);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+      backdrop-filter: blur(2px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FDBB30;
+      font-size: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      opacity: 0;
+      will-change: transform;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .custom-cursor.visible {
+      opacity: 1;
+    }
+
+    .custom-cursor.hover {
+      width: 80px;
+      height: 80px;
+      background: rgba(253, 187, 48, 0.05);
+      border-color: rgba(253, 187, 48, 0.1);
     }
 
     /* ===== FOOTER ===== */
@@ -506,6 +587,7 @@
       gap: 1.5rem;
       font-size: 0.7rem;
       color: #444;
+      font-family: 'Inter', sans-serif;
     }
 
     .studio-footer .copy {
@@ -585,6 +667,13 @@
         align-items: flex-start;
         gap: 0.5rem;
       }
+      .repo-preview-section {
+        background-attachment: scroll;
+        padding: 2rem 0;
+      }
+      .custom-cursor {
+        display: none;
+      }
     }
 
     @media (max-width: 480px) {
@@ -606,32 +695,6 @@
         height: 60px;
       }
     }
-    .repo-preview-section {
-  background-image: url('astro.gif');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed; /* Efecto parallax */
-  padding: 4rem 0;
-  position: relative;
-}
-
-/* Overlay para legibilidad */
-.repo-preview-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(1, 4, 10, 0.7);
-  z-index: 0;
-}
-
-.repo-preview-section > * {
-  position: relative;
-  z-index: 1;
-}
-
   </style>
 </head>
 <body>
@@ -650,11 +713,11 @@
         VERTICE <span>STUDIO</span>
       </div>
       <ul class="nav-studio">
-        <li><a href="#" class="active">INICIO</a></li>
-        <li><a href="#servicios">SERVICIOS</a></li>
-        <li><a href="#repositorio">REPOSITORIO</a></li>
-        <li><a href="vertice-repositorio.html">VER TODO</a></li>
-        <li><a href="#contacto">CONTACTO</a></li>
+        <li><a href="index.html">INICIO</a></li>
+        <li><a href="#" class="active">STUDIO</a></li>
+        <li><a href="vertice-connect.html">CONNECT</a></li>
+        <li><a href="vertice-tech.html">TECH</a></li>
+        <li><a href="vertice-repositorio.html">REPOSITORIO</a></li>
       </ul>
     </header>
 
@@ -672,7 +735,7 @@
         <a href="vertice-repositorio.html" class="cta">Ver repositorio</a>
       </div>
       <div class="hero-video" id="videoContainer">
-        <video 
+        <video
           id="heroVideo"
           muted
           playsinline
@@ -809,6 +872,9 @@
 
   </div>
 
+  <!-- ===== CURSOR PERSONALIZADO ===== -->
+  <div class="custom-cursor" id="customCursor">EXPLORAR</div>
+
   <!-- ===== JAVASCRIPT ===== -->
   <script>
     (function() {
@@ -917,6 +983,43 @@
           }
         });
       });
+
+      // ===== CURSOR PERSONALIZADO =====
+      const cursor = document.getElementById('customCursor');
+      let cursorVisible = false;
+
+      if (cursor && window.innerWidth > 768) {
+        document.addEventListener('mousemove', function(e) {
+          if (!cursorVisible) {
+            cursor.classList.add('visible');
+            cursorVisible = true;
+          }
+          cursor.style.left = e.clientX + 'px';
+          cursor.style.top = e.clientY + 'px';
+        });
+
+        const hoverTargets = document.querySelectorAll('.service-card, .repo-preview-item, .division-card');
+        hoverTargets.forEach(target => {
+          target.addEventListener('mouseenter', function() {
+            cursor.classList.add('hover');
+            cursor.textContent = 'VER';
+          });
+          target.addEventListener('mouseleave', function() {
+            cursor.classList.remove('hover');
+            cursor.textContent = 'EXPLORAR';
+          });
+        });
+
+        document.addEventListener('mouseleave', function() {
+          cursor.classList.remove('visible');
+          cursorVisible = false;
+        });
+
+        document.addEventListener('mouseenter', function() {
+          cursor.classList.add('visible');
+          cursorVisible = true;
+        });
+      }
 
       console.log('Vertice Studio · Web cargada');
     })();
