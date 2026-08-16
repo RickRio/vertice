@@ -78,15 +78,8 @@
     }
 
     @keyframes pulse-loading {
-      0%,
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-      50% {
-        transform: scale(1.08);
-        opacity: 0.8;
-      }
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.08); opacity: 0.8; }
     }
 
     /* ===== CONTENEDOR PRINCIPAL ===== */
@@ -167,7 +160,7 @@
       align-items: center;
       text-align: center;
       padding: 3rem 0 2rem 0;
-      min-height: 60vh;
+      min-height: 50vh;
     }
 
     .hero-connect .presentation {
@@ -209,7 +202,7 @@
       font-size: 1.1rem;
       font-weight: 300;
       color: #cccccc;
-      max-width: 600px;
+      max-width: 700px;
       margin: 1.5rem auto 0 auto;
       line-height: 1.8;
       font-family: 'Inter', sans-serif;
@@ -220,14 +213,321 @@
       font-weight: 600;
     }
 
-    /* ===== SECCIÓN INTERACTIVA ===== */
-    .interactive-section {
-      padding: 2rem 0 3rem 0;
-      border-top: 1px solid rgba(127, 255, 212, 0.05);
-      margin-top: 2rem;
+    /* ===== ===== ===== ===== ===== ===== */
+    /* ===== ICONOS ANIMADOS MINIMALISTAS ===== */
+    /* ===== ===== ===== ===== ===== ===== */
+
+    /* Contenedor de iconos animados */
+    .animated-icon-wrap {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 0.8rem auto;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(127, 255, 212, 0.02);
+      border: 1px solid rgba(127, 255, 212, 0.04);
+      transition: all 0.4s ease;
     }
 
-    .interactive-section .subtitle {
+    .service-data-card:hover .animated-icon-wrap,
+    .capability-item:hover .animated-icon-wrap,
+    .process-step:hover .animated-icon-wrap {
+      background: rgba(127, 255, 212, 0.04);
+      border-color: rgba(127, 255, 212, 0.08);
+      transform: scale(1.05);
+    }
+
+    /* SVG animado base */
+    .animated-icon {
+      width: 40px;
+      height: 40px;
+      display: block;
+      fill: none;
+      stroke: #7FFFD4;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Animaciones específicas */
+    .icon-seo .circle {
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: drawCircle 3s ease-in-out infinite;
+    }
+
+    .icon-seo .line {
+      stroke-dasharray: 30;
+      stroke-dashoffset: 30;
+      animation: drawLine 3s ease-in-out infinite;
+    }
+
+    .icon-maps .pin {
+      transform-origin: center;
+      animation: pulsePin 2.5s ease-in-out infinite;
+    }
+
+    .icon-maps .ring {
+      transform-origin: center;
+      animation: expandRing 3s ease-in-out infinite;
+    }
+
+    .icon-ai .dot {
+      animation: pulseDot 2s ease-in-out infinite;
+    }
+
+    .icon-ai .orbit {
+      transform-origin: center;
+      animation: rotateOrbit 4s linear infinite;
+    }
+
+    .icon-analytics .bar {
+      transform-origin: bottom;
+      animation: growBar 2.5s ease-in-out infinite;
+    }
+
+    .icon-analytics .bar:nth-child(1) { animation-delay: 0s; }
+    .icon-analytics .bar:nth-child(2) { animation-delay: 0.3s; }
+    .icon-analytics .bar:nth-child(3) { animation-delay: 0.6s; }
+    .icon-analytics .bar:nth-child(4) { animation-delay: 0.9s; }
+    .icon-analytics .bar:nth-child(5) { animation-delay: 1.2s; }
+
+    .icon-dev .bracket {
+      animation: pulseBracket 2s ease-in-out infinite;
+    }
+
+    .icon-community .node {
+      transform-origin: center;
+      animation: pulseNode 2.5s ease-in-out infinite;
+    }
+
+    .icon-community .connection {
+      stroke-dasharray: 40;
+      stroke-dashoffset: 40;
+      animation: drawConnection 3s ease-in-out infinite;
+    }
+
+    .icon-content .pen {
+      transform-origin: 30px 30px;
+      animation: writePen 3s ease-in-out infinite;
+    }
+
+    .icon-audit .check {
+      stroke-dasharray: 20;
+      stroke-dashoffset: 20;
+      animation: drawCheck 2.5s ease-in-out infinite;
+    }
+
+    /* Keyframes */
+    @keyframes drawCircle {
+      0%, 100% { stroke-dashoffset: 100; }
+      50% { stroke-dashoffset: 0; }
+    }
+
+    @keyframes drawLine {
+      0%, 100% { stroke-dashoffset: 30; }
+      50% { stroke-dashoffset: 0; }
+    }
+
+    @keyframes pulsePin {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    @keyframes expandRing {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.3); opacity: 0.1; }
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    @keyframes rotateOrbit {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes growBar {
+      0%, 100% { transform: scaleY(0.3); }
+      50% { transform: scaleY(1); }
+    }
+
+    @keyframes pulseBracket {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes pulseNode {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    @keyframes drawConnection {
+      0%, 100% { stroke-dashoffset: 40; }
+      50% { stroke-dashoffset: 0; }
+    }
+
+    @keyframes writePen {
+      0%, 100% { transform: rotate(-10deg); }
+      50% { transform: rotate(10deg); }
+    }
+
+    @keyframes drawCheck {
+      0%, 100% { stroke-dashoffset: 20; }
+      50% { stroke-dashoffset: 0; }
+    }
+
+    /* ===== ===== ===== ===== ===== ===== */
+    /* ===== FIN ICONOS ANIMADOS ===== */
+    /* ===== ===== ===== ===== ===== ===== */
+
+    /* ===== SECCIÓN SERVICIOS DATA SEO ===== */
+    .services-data-section {
+      padding: 4rem 0 3rem 0;
+      border-top: 1px solid rgba(127, 255, 212, 0.05);
+      margin-top: 1rem;
+    }
+
+    .services-data-section .section-title {
+      font-size: 0.7rem;
+      font-weight: 300;
+      color: #555;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .services-data-section .section-subtitle {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #7FFFD4;
+      font-family: 'Outfit', sans-serif;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .services-data-section .section-subtitle small {
+      font-weight: 300;
+      color: #666;
+      font-size: 1.2rem;
+      display: block;
+      margin-top: 0.3rem;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .services-data-section .section-desc {
+      text-align: center;
+      color: #888;
+      font-size: 0.95rem;
+      font-weight: 300;
+      max-width: 700px;
+      margin: 0 auto 2.5rem auto;
+      line-height: 1.8;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .services-data-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .service-data-card {
+      background: rgba(127, 255, 212, 0.02);
+      border: 1px solid rgba(127, 255, 212, 0.05);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .service-data-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #7FFFD4;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .service-data-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(127, 255, 212, 0.15);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .service-data-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-data-card .number {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: rgba(127, 255, 212, 0.04);
+      line-height: 1;
+      font-family: 'Outfit', sans-serif;
+      margin-bottom: 0.5rem;
+    }
+
+    .service-data-card h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #7FFFD4;
+      margin-bottom: 0.5rem;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .service-data-card p {
+      font-size: 0.8rem;
+      color: #888;
+      font-weight: 300;
+      line-height: 1.7;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .service-data-card .badge-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: center;
+      margin-top: 0.8rem;
+    }
+
+    .service-data-card .badge-list .badge {
+      background: rgba(127, 255, 212, 0.05);
+      border: 1px solid rgba(127, 255, 212, 0.05);
+      padding: 0.15rem 0.7rem;
+      border-radius: 30px;
+      font-size: 0.55rem;
+      color: #7FFFD4;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ===== CAPACIDADES ===== */
+    .capabilities-section {
+      padding: 3rem 0;
+      border-top: 1px solid rgba(127, 255, 212, 0.05);
+      margin-top: 1rem;
+    }
+
+    .capabilities-section .cap-title {
       font-size: 0.7rem;
       font-weight: 300;
       color: #555;
@@ -238,52 +538,112 @@
       font-family: 'Inter', sans-serif;
     }
 
-    .interactive-grid {
+    .capabilities-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
-      max-width: 900px;
-      margin: 0 auto;
     }
 
-    .interactive-item {
-      background: rgba(127, 255, 212, 0.03);
-      border: 1px solid rgba(127, 255, 212, 0.05);
+    .capability-item {
+      background: rgba(127, 255, 212, 0.02);
+      border: 1px solid rgba(127, 255, 212, 0.03);
       border-radius: 12px;
-      padding: 1.5rem 0.8rem;
+      padding: 1.5rem 1rem;
       text-align: center;
       transition: all 0.3s ease;
       cursor: pointer;
     }
 
-    .interactive-item:hover {
-      background: rgba(127, 255, 212, 0.06);
-      border-color: rgba(127, 255, 212, 0.15);
+    .capability-item:hover {
+      background: rgba(127, 255, 212, 0.04);
+      border-color: rgba(127, 255, 212, 0.08);
       transform: translateY(-4px);
     }
 
-    .interactive-item .icon {
-      font-size: 2rem;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    .interactive-item h4 {
+    .capability-item h5 {
       font-size: 0.8rem;
-      font-weight: 700;
+      font-weight: 600;
       color: #7FFFD4;
-      letter-spacing: 0.05em;
       font-family: 'Outfit', sans-serif;
+      margin-bottom: 0.2rem;
     }
 
-    .interactive-item p {
+    .capability-item p {
       font-size: 0.6rem;
-      color: #888;
+      color: #666;
       font-weight: 300;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-top: 0.2rem;
       font-family: 'Inter', sans-serif;
+    }
+
+    /* ===== PROCESO ===== */
+    .process-section {
+      padding: 3rem 0;
+      border-top: 1px solid rgba(127, 255, 212, 0.05);
+      margin-top: 1rem;
+    }
+
+    .process-section .process-title {
+      font-size: 0.7rem;
+      font-weight: 300;
+      color: #555;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .process-step {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(127, 255, 212, 0.03);
+      background: rgba(127, 255, 212, 0.01);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .process-step:hover {
+      border-color: rgba(127, 255, 212, 0.08);
+    }
+
+    .process-step .step-number {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: rgba(127, 255, 212, 0.04);
+      font-family: 'Outfit', sans-serif;
+      line-height: 1;
+    }
+
+    .process-step h5 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #7FFFD4;
+      font-family: 'Outfit', sans-serif;
+      margin-bottom: 0.3rem;
+    }
+
+    .process-step p {
+      font-size: 0.7rem;
+      color: #666;
+      font-weight: 300;
+      line-height: 1.5;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .process-step .step-arrow {
+      color: rgba(127, 255, 212, 0.1);
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+      display: block;
     }
 
     /* ===== CRÉDITOS ===== */
@@ -359,79 +719,66 @@
       border-color: rgba(127, 255, 212, 0.1);
     }
 
+    /* ===== FOOTER ===== */
+    .connect-footer {
+      padding: 1.5rem 0 0.5rem 0;
+      border-top: 1px solid rgba(127, 255, 212, 0.03);
+      margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.65rem;
+      color: #444;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .connect-footer .social a {
+      color: #555;
+      transition: color 0.3s;
+      margin-left: 1.5rem;
+    }
+
+    .connect-footer .social a:hover {
+      color: #7FFFD4;
+    }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1024px) {
-      .hero-connect h1 {
-        font-size: 3.8rem;
-      }
-      .interactive-grid {
-        grid-template-columns: repeat(2, 1fr);
-        max-width: 600px;
-      }
-      .credits-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .hero-connect h1 { font-size: 3.8rem; }
+      .services-data-grid { grid-template-columns: repeat(2, 1fr); }
+      .capabilities-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-steps { grid-template-columns: repeat(2, 1fr); }
+      .credits-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 768px) {
-      .vertice-connect {
-        padding: 1rem 1.2rem;
-      }
-      .connect-header {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0.8rem;
-      }
-      .nav-connect {
-        justify-content: space-around;
-        gap: 0.5rem;
-        flex-wrap: wrap;
-      }
-      .hero-connect h1 {
-        font-size: 2.8rem;
-      }
-      .hero-connect .tagline {
-        font-size: 0.95rem;
-        padding: 0 1rem;
-      }
-      .interactive-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.8rem;
-        padding: 0 0.5rem;
-      }
-      .credits-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-      .custom-cursor {
-        display: none;
-      }
+      .vertice-connect { padding: 1rem 1.2rem; }
+      .connect-header { flex-direction: column; align-items: stretch; gap: 0.8rem; }
+      .nav-connect { justify-content: space-around; gap: 0.5rem; flex-wrap: wrap; }
+      .hero-connect h1 { font-size: 2.8rem; }
+      .hero-connect .tagline { font-size: 0.95rem; padding: 0 1rem; }
+      .services-data-grid { grid-template-columns: 1fr; max-width: 450px; margin: 0 auto; }
+      .capabilities-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+      .process-steps { grid-template-columns: 1fr; max-width: 350px; margin: 0 auto; }
+      .credits-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .custom-cursor { display: none; }
+      .services-data-section .section-subtitle { font-size: 2rem; }
     }
 
     @media (max-width: 480px) {
-      .hero-connect h1 {
-        font-size: 2.2rem;
-      }
-      .hero-connect .presentation {
-        font-size: 0.6rem;
-      }
-      .interactive-item {
-        padding: 1rem 0.5rem;
-      }
-      .interactive-item .icon {
-        font-size: 1.5rem;
-      }
-      .loading-overlay img {
-        width: 80px;
-        height: 80px;
-      }
+      .hero-connect h1 { font-size: 2.2rem; }
+      .hero-connect .presentation { font-size: 0.6rem; }
+      .capabilities-grid { grid-template-columns: 1fr; }
+      .loading-overlay img { width: 80px; height: 80px; }
+      .services-data-section .section-subtitle { font-size: 1.6rem; }
+      .connect-footer { flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; }
+      .connect-footer .social a { margin: 0 0.5rem; }
     }
 
-    /* Prefers reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      .custom-cursor {
-        display: none !important;
-      }
+      .custom-cursor { display: none !important; }
+      .animated-icon * { animation: none !important; }
     }
   </style>
 </head>
@@ -469,35 +816,319 @@
         <small>ESTRATEGIA DIGITAL · 2026</small>
       </h1>
       <p class="tagline">
-        Una experiencia interactiva basada en <strong>conexión</strong> y <strong>resultados</strong>.<br>
-        SEO, Community Management y contenido que <strong>transforma</strong> audiencias.
+        <strong>Datos que posicionan.</strong> Decisiones explicadas, prioridades claras e implementación medible para transformar búsquedas en oportunidades de negocio.<br>
+        SEO · GEO · AEO · Community Management · Contenido
       </p>
     </section>
 
-    <!-- ===== SECCIÓN INTERACTIVA ===== -->
-    <section class="interactive-section">
-      <div class="subtitle">✦ servicios interactivos ✦</div>
-      <div class="interactive-grid">
-        <div class="interactive-item">
-          <span class="icon">🔍</span>
-          <h4>SEO Estratégico</h4>
-          <p>Posicionamiento · Auditoría</p>
+    <!-- ===== SERVICIOS DATA SEO CON ICONOS ANIMADOS ===== -->
+    <section class="services-data-section">
+      <div class="section-title">✦ Catálogo de Servicios</div>
+      <div class="section-subtitle">
+        Posicionamiento con inteligencia
+        <small>SEO + GEO + AEO</small>
+      </div>
+      <p class="section-desc">
+        Estrategia, desarrollo web y datos para crecer en Google, Google Maps y los motores de respuesta con inteligencia artificial.
+      </p>
+
+      <div class="services-data-grid">
+
+        <!-- Servicio 1: Desarrollo Web + SEO -->
+        <div class="service-data-card" onclick="window.location.href='vertice-repositorio.html'">
+          <div class="number">01</div>
+          <div class="animated-icon-wrap">
+            <svg class="animated-icon icon-dev" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+              <path class="bracket" d="M15 10 L25 20 L15 30" stroke="#7FFFD4" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <path class="bracket" d="M45 10 L35 20 L45 30" stroke="#7FFFD4" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="30" y1="5" x2="30" y2="35" stroke="#7FFFD4" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h4>Desarrollo Web + SEO</h4>
+          <p>Sitios rápidos, modernos y estructurados para posicionarse desde su lanzamiento.</p>
+          <div class="badge-list">
+            <span class="badge">UX/UI</span>
+            <span class="badge">Responsive</span>
+            <span class="badge">Schema</span>
+          </div>
         </div>
-        <div class="interactive-item">
-          <span class="icon">📱</span>
-          <h4>Community Management</h4>
-          <p>Redes · Contenido · Engagement</p>
+
+        <!-- Servicio 2: SEO Mensual -->
+        <div class="service-data-card" onclick="window.location.href='vertice-repositorio.html'">
+          <div class="number">02</div>
+          <div class="animated-icon-wrap">
+            <svg class="animated-icon icon-seo" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+              <circle class="circle" cx="30" cy="30" r="18" stroke="#7FFFD4" stroke-width="2" fill="none"/>
+              <line class="line" x1="30" y1="15" x2="30" y2="30" stroke="#7FFFD4" stroke-width="2" stroke-linecap="round"/>
+              <line class="line" x1="30" y1="30" x2="40" y2="40" stroke="#7FFFD4" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h4>SEO Mensual</h4>
+          <p>Optimización continua, contenidos, autoridad, medición y mejora de conversiones.</p>
+          <div class="badge-list">
+            <span class="badge">Auditoría</span>
+            <span class="badge">Contenido</span>
+            <span class="badge">Analytics</span>
+          </div>
         </div>
-        <div class="interactive-item">
-          <span class="icon">📊</span>
-          <h4>Analytics & Data</h4>
-          <p>Métricas · Insights · Reportes</p>
+
+        <!-- Servicio 3: SEO para Google Maps -->
+        <div class="service-data-card" onclick="window.location.href='vertice-repositorio.html'">
+          <div class="number">03</div>
+          <div class="animated-icon-wrap">
+            <svg class="animated-icon icon-maps" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+              <circle class="ring" cx="30" cy="30" r="20" stroke="#7FFFD4" stroke-width="1" fill="none"/>
+              <circle class="ring" cx="30" cy="30" r="28" stroke="#7FFFD4" stroke-width="0.5" fill="none"/>
+              <path class="pin" d="M30 10 C22 10 18 18 18 24 C18 32 30 46 30 46 C30 46 42 32 42 24 C42 18 38 10 30 10 Z" stroke="#7FFFD4" stroke-width="2" fill="rgba(127,255,212,0.1)"/>
+              <circle cx="30" cy="24" r="6" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.15)"/>
+            </svg>
+          </div>
+          <h4>SEO para Google Maps</h4>
+          <p>Visibilidad local para generar llamadas, rutas, mensajes y visitas al negocio.</p>
+          <div class="badge-list">
+            <span class="badge">Perfil de Empresa</span>
+            <span class="badge">Reseñas</span>
+            <span class="badge">Landing Pages</span>
+          </div>
         </div>
-        <div class="interactive-item">
-          <span class="icon">🎯</span>
-          <h4>Estrategia de Contenido</h4>
-          <p>Branding · Storytelling · Social</p>
+
+        <!-- Servicio 4: GEO + AEO -->
+        <div class="service-data-card" onclick="window.location.href='vertice-repositorio.html'">
+          <div class="number">04</div>
+          <div class="animated-icon-wrap">
+            <svg class="animated-icon icon-ai" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+              <circle class="dot" cx="30" cy="30" r="6" stroke="#7FFFD4" stroke-width="2" fill="rgba(127,255,212,0.15)"/>
+              <circle class="orbit" cx="30" cy="30" r="20" stroke="#7FFFD4" stroke-width="1" fill="none" stroke-dasharray="4 6"/>
+              <circle class="dot" cx="22" cy="16" r="3" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+              <circle class="dot" cx="42" cy="38" r="3" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+              <circle class="dot" cx="42" cy="16" r="2" stroke="#7FFFD4" stroke-width="1" fill="rgba(127,255,212,0.05)"/>
+            </svg>
+          </div>
+          <h4>GEO + AEO</h4>
+          <p>Contenido y señales para Google y los motores de respuesta con inteligencia artificial.</p>
+          <div class="badge-list">
+            <span class="badge">IA</span>
+            <span class="badge">Gemini</span>
+            <span class="badge">Copilot</span>
+          </div>
         </div>
+
+        <!-- Servicio 5: Auditoría y Migración -->
+        <div class="service-data-card" onclick="window.location.href='vertice-repositorio.html'">
+          <div class="number">05</div>
+          <div class="animated-icon-wrap">
+            <svg class="animated-icon icon-audit" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="14" width="40" height="32" rx="4" stroke="#7FFFD4" stroke-width="2" fill="rgba(127,255,212,0.03)"/>
+              <line x1="18" y1="24" x2="42" y2="24" stroke="#7FFFD4" stroke-width="1" stroke-linecap="round"/>
+              <line x1="18" y1="30" x2="42" y2="30" stroke="#7FFFD4" stroke-width="1" stroke-linecap="round"/>
+              <line x1="18" y1="36" x2="34" y2="36" stroke="#7FFFD4" stroke-width="1" stroke-linecap="round"/>
+              <path class="check" d="M46 38 L50 42 L56 34" stroke="#7FFFD4" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h4>Auditoría y Migración</h4>
+          <p>Diagnóstico, prioridades y protección del posicionamiento en cambios de web.</p>
+          <div class="badge-list">
+            <span class="badge">Diagnóstico</span>
+            <span class="badge">Redirecciones</span>
+            <span class="badge">Seguimiento</span>
+          </div>
+        </div>
+
+        <!-- Servicio 6: Analítica y Conversiones -->
+        <div class="service-data-card" onclick="window.location.href='vertice-repositorio.html'">
+          <div class="number">06</div>
+          <div class="animated-icon-wrap">
+            <svg class="animated-icon icon-analytics" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+              <rect x="8" y="38" width="44" height="14" rx="2" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.03)"/>
+              <rect class="bar" x="14" y="28" width="6" height="12" rx="2" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+              <rect class="bar" x="24" y="20" width="6" height="20" rx="2" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+              <rect class="bar" x="34" y="24" width="6" height="16" rx="2" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+              <rect class="bar" x="44" y="14" width="6" height="26" rx="2" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+            </svg>
+          </div>
+          <h4>Analítica y Conversiones</h4>
+          <p>GA4, GTM, Search Console, eventos, formularios y dashboards para decisiones basadas en datos.</p>
+          <div class="badge-list">
+            <span class="badge">GA4</span>
+            <span class="badge">GTM</span>
+            <span class="badge">Dashboards</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== CAPACIDADES CON ICONOS ANIMADOS ===== -->
+    <section class="capabilities-section">
+      <div class="cap-title">✦ Capacidades</div>
+      <div class="capabilities-grid">
+
+        <div class="capability-item" onclick="window.location.href='vertice-repositorio.html'">
+          <div class="animated-icon-wrap" style="width:56px;height:56px;">
+            <svg class="animated-icon icon-seo" viewBox="0 0 50 50" style="width:32px;height:32px;">
+              <circle class="circle" cx="25" cy="25" r="14" stroke="#7FFFD4" stroke-width="2" fill="none"/>
+              <line class="line" x1="25" y1="14" x2="25" y2="25" stroke="#7FFFD4" stroke-width="1.5" stroke-linecap="round"/>
+              <line class="line" x1="25" y1="25" x2="33" y2="33" stroke="#7FFFD4" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h5>SEO Estratégico</h5>
+          <p>Posicionamiento en buscadores</p>
+        </div>
+
+        <div class="capability-item" onclick="window.location.href='vertice-repositorio.html'">
+          <div class="animated-icon-wrap" style="width:56px;height:56px;">
+            <svg class="animated-icon icon-maps" viewBox="0 0 50 50" style="width:32px;height:32px;">
+              <path class="pin" d="M25 12 C19 12 16 18 16 22 C16 28 25 38 25 38 C25 38 34 28 34 22 C34 18 31 12 25 12 Z" stroke="#7FFFD4" stroke-width="2" fill="rgba(127,255,212,0.1)"/>
+              <circle cx="25" cy="22" r="4" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.15)"/>
+            </svg>
+          </div>
+          <h5>Google Maps</h5>
+          <p>Visibilidad local y llamadas</p>
+        </div>
+
+        <div class="capability-item" onclick="window.location.href='vertice-repositorio.html'">
+          <div class="animated-icon-wrap" style="width:56px;height:56px;">
+            <svg class="animated-icon icon-ai" viewBox="0 0 50 50" style="width:32px;height:32px;">
+              <circle class="dot" cx="25" cy="25" r="5" stroke="#7FFFD4" stroke-width="2" fill="rgba(127,255,212,0.15)"/>
+              <circle class="orbit" cx="25" cy="25" r="16" stroke="#7FFFD4" stroke-width="1" fill="none" stroke-dasharray="3 5"/>
+              <circle class="dot" cx="19" cy="15" r="2.5" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+              <circle class="dot" cx="34" cy="32" r="2.5" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+            </svg>
+          </div>
+          <h5>GEO + AEO</h5>
+          <p>Motores de respuesta IA</p>
+        </div>
+
+        <div class="capability-item" onclick="window.location.href='vertice-repositorio.html'">
+          <div class="animated-icon-wrap" style="width:56px;height:56px;">
+            <svg class="animated-icon icon-community" viewBox="0 0 50 50" style="width:32px;height:32px;">
+              <circle class="node" cx="15" cy="15" r="5" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+              <circle class="node" cx="35" cy="15" r="5" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+              <circle class="node" cx="25" cy="35" r="5" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+              <path class="connection" d="M18 18 L23 32" stroke="#7FFFD4" stroke-width="1.5" fill="none"/>
+              <path class="connection" d="M32 18 L27 32" stroke="#7FFFD4" stroke-width="1.5" fill="none"/>
+              <line x1="18" y1="12" x2="32" y2="12" stroke="#7FFFD4" stroke-width="1" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h5>Community Management</h5>
+          <p>Redes sociales y engagement</p>
+        </div>
+
+        <div class="capability-item" onclick="window.location.href='vertice-repositorio.html'">
+          <div class="animated-icon-wrap" style="width:56px;height:56px;">
+            <svg class="animated-icon icon-dev" viewBox="0 0 50 50" style="width:32px;height:32px;">
+              <path class="bracket" d="M12 12 L20 20 L12 28" stroke="#7FFFD4" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <path class="bracket" d="M38 12 L30 20 L38 28" stroke="#7FFFD4" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="25" y1="8" x2="25" y2="30" stroke="#7FFFD4" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h5>Desarrollo Web</h5>
+          <p>Diseño y código optimizado</p>
+        </div>
+
+        <div class="capability-item" onclick="window.location.href='vertice-repositorio.html'">
+          <div class="animated-icon-wrap" style="width:56px;height:56px;">
+            <svg class="animated-icon icon-analytics" viewBox="0 0 50 50" style="width:32px;height:32px;">
+              <rect x="8" y="32" width="34" height="10" rx="2" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.03)"/>
+              <rect class="bar" x="13" y="24" width="4" height="10" rx="2" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+              <rect class="bar" x="20" y="18" width="4" height="16" rx="2" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+              <rect class="bar" x="27" y="22" width="4" height="12" rx="2" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+              <rect class="bar" x="34" y="14" width="4" height="20" rx="2" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+            </svg>
+          </div>
+          <h5>Analytics & Data</h5>
+          <p>Métricas y conversiones</p>
+        </div>
+
+        <div class="capability-item" onclick="window.location.href='vertice-repositorio.html'">
+          <div class="animated-icon-wrap" style="width:56px;height:56px;">
+            <svg class="animated-icon icon-content" viewBox="0 0 50 50" style="width:32px;height:32px;">
+              <path class="pen" d="M28 10 L40 22 L22 40 L10 40 L10 28 L28 10 Z" stroke="#7FFFD4" stroke-width="2" fill="rgba(127,255,212,0.05)" stroke-linejoin="round"/>
+              <line x1="22" y1="16" x2="34" y2="28" stroke="#7FFFD4" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="14" y1="30" x2="20" y2="36" stroke="#7FFFD4" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h5>Content Strategy</h5>
+          <p>Storytelling y branding</p>
+        </div>
+
+        <div class="capability-item" onclick="window.location.href='vertice-repositorio.html'">
+          <div class="animated-icon-wrap" style="width:56px;height:56px;">
+            <svg class="animated-icon icon-audit" viewBox="0 0 50 50" style="width:32px;height:32px;">
+              <rect x="10" y="14" width="30" height="24" rx="3" stroke="#7FFFD4" stroke-width="2" fill="rgba(127,255,212,0.03)"/>
+              <line x1="16" y1="22" x2="34" y2="22" stroke="#7FFFD4" stroke-width="1" stroke-linecap="round"/>
+              <line x1="16" y1="28" x2="34" y2="28" stroke="#7FFFD4" stroke-width="1" stroke-linecap="round"/>
+              <path class="check" d="M38 30 L41 33 L46 27" stroke="#7FFFD4" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h5>Auditoría SEO</h5>
+          <p>Diagnóstico y plan de acción</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== PROCESO CON ICONOS ANIMADOS ===== -->
+    <section class="process-section">
+      <div class="process-title">✦ Cómo trabajamos</div>
+      <div class="process-steps">
+
+        <div class="process-step">
+          <div class="step-number">01</div>
+          <div class="animated-icon-wrap" style="width:56px;height:56px;margin:0.3rem auto;">
+            <svg class="animated-icon icon-seo" viewBox="0 0 50 50" style="width:32px;height:32px;">
+              <circle class="circle" cx="25" cy="25" r="14" stroke="#7FFFD4" stroke-width="2" fill="none"/>
+              <line class="line" x1="25" y1="14" x2="25" y2="25" stroke="#7FFFD4" stroke-width="1.5" stroke-linecap="round"/>
+              <line class="line" x1="25" y1="25" x2="33" y2="33" stroke="#7FFFD4" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h5>Diagnóstico</h5>
+          <p>Estado real, competencia y oportunidades</p>
+          <span class="step-arrow">↓</span>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">02</div>
+          <div class="animated-icon-wrap" style="width:56px;height:56px;margin:0.3rem auto;">
+            <svg class="animated-icon icon-content" viewBox="0 0 50 50" style="width:32px;height:32px;">
+              <path class="pen" d="M28 10 L40 22 L22 40 L10 40 L10 28 L28 10 Z" stroke="#7FFFD4" stroke-width="2" fill="rgba(127,255,212,0.05)" stroke-linejoin="round"/>
+              <line x1="22" y1="16" x2="34" y2="28" stroke="#7FFFD4" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h5>Estrategia</h5>
+          <p>Objetivos, prioridades y hoja de ruta</p>
+          <span class="step-arrow">↓</span>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">03</div>
+          <div class="animated-icon-wrap" style="width:56px;height:56px;margin:0.3rem auto;">
+            <svg class="animated-icon icon-dev" viewBox="0 0 50 50" style="width:32px;height:32px;">
+              <path class="bracket" d="M12 12 L20 20 L12 28" stroke="#7FFFD4" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <path class="bracket" d="M38 12 L30 20 L38 28" stroke="#7FFFD4" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="25" y1="8" x2="25" y2="30" stroke="#7FFFD4" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h5>Implementación</h5>
+          <p>Mejoras técnicas, visuales y de contenido</p>
+          <span class="step-arrow">↓</span>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">04</div>
+          <div class="animated-icon-wrap" style="width:56px;height:56px;margin:0.3rem auto;">
+            <svg class="animated-icon icon-analytics" viewBox="0 0 50 50" style="width:32px;height:32px;">
+              <rect x="8" y="32" width="34" height="10" rx="2" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.03)"/>
+              <rect class="bar" x="13" y="24" width="4" height="10" rx="2" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+              <rect class="bar" x="20" y="18" width="4" height="16" rx="2" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+              <rect class="bar" x="27" y="22" width="4" height="12" rx="2" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+              <rect class="bar" x="34" y="14" width="4" height="20" rx="2" stroke="#7FFFD4" stroke-width="1.5" fill="rgba(127,255,212,0.1)"/>
+            </svg>
+          </div>
+          <h5>Medición</h5>
+          <p>Tráfico, posiciones, leads y conversiones</p>
+        </div>
+
       </div>
     </section>
 
@@ -510,28 +1141,27 @@
           <span>Estrategia · Contenido · Resultados</span>
         </div>
         <div class="col">
-          <strong>Equipo</strong>
-          <span>Dirección Estratégica</span>
-          <span>Community Managers</span>
-          <span>Analistas SEO</span>
+          <strong>Especialidades</strong>
+          <span>SEO · Google Maps · GEO · AEO</span>
+          <span>Desarrollo Web · Analytics</span>
         </div>
         <div class="col">
-          <strong>Partners</strong>
-          <span class="highlight">Vertice Collective</span>
-          <span class="highlight">Vertice Studio</span>
-          <span class="highlight">Vertice Tech</span>
+          <strong>Contacto</strong>
+          <span class="highlight">📧 hola@vertice.co</span>
+          <span class="highlight">📱 +593 98 405 7327</span>
         </div>
       </div>
     </section>
 
     <!-- ===== FOOTER ===== -->
-    <footer style="padding: 1.5rem 0 0.5rem 0; border-top: 1px solid rgba(127, 255, 212, 0.03); margin-top: 1rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; font-size: 0.65rem; color: #444; font-family: 'Inter', sans-serif;">
+    <footer class="connect-footer">
       <span>© 2026 Vertice Connect · SEO & Community</span>
-      <span style="display: flex; gap: 1.5rem;">
-        <a href="#" style="color: #555; transition: color 0.3s;" onmouseover="this.style.color='#7FFFD4'" onmouseout="this.style.color='#555'">IG</a>
-        <a href="#" style="color: #555; transition: color 0.3s;" onmouseover="this.style.color='#7FFFD4'" onmouseout="this.style.color='#555'">TW</a>
-        <a href="#" style="color: #555; transition: color 0.3s;" onmouseover="this.style.color='#7FFFD4'" onmouseout="this.style.color='#555'">LINKEDIN</a>
-      </span>
+      <div class="social">
+        <a href="#">IG</a>
+        <a href="#">TW</a>
+        <a href="#">LINKEDIN</a>
+        <a href="#">YOUTUBE</a>
+      </div>
     </footer>
 
   </div>
@@ -579,17 +1209,15 @@
         });
       });
 
-      // ===== EFECTO HOVER EN ITEMS INTERACTIVOS =====
-      const items = document.querySelectorAll('.interactive-item');
-      items.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-          this.style.transition = 'all 0.25s ease';
-        });
-        item.addEventListener('click', function() {
-          showLoading();
-          setTimeout(() => {
-            window.location.href = 'vertice-repositorio.html';
-          }, 400);
+      // ===== REDIRECCIÓN DE TARJETAS =====
+      document.querySelectorAll('.service-data-card, .capability-item, .process-step').forEach(item => {
+        item.addEventListener('click', function(e) {
+          if (!e.target.closest('a')) {
+            showLoading();
+            setTimeout(() => {
+              window.location.href = 'vertice-repositorio.html';
+            }, 400);
+          }
         });
       });
 
@@ -607,7 +1235,7 @@
           cursor.style.top = e.clientY + 'px';
         });
 
-        const hoverTargets = document.querySelectorAll('.interactive-item, .credits-grid .col');
+        const hoverTargets = document.querySelectorAll('.service-data-card, .capability-item, .process-step');
         hoverTargets.forEach(target => {
           target.addEventListener('mouseenter', function() {
             cursor.classList.add('hover');
@@ -630,7 +1258,7 @@
         });
       }
 
-      console.log('Vertice Connect · Web interactiva cargada');
+      console.log('Vertice Connect · Web interactiva con iconos animados minimalistas');
     })();
   </script>
 </body>
