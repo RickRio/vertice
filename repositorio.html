@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vértice · Repositorio de Contenido</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET Y BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #01040A;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ===== CONTENEDOR PRINCIPAL ===== */
+    .vertice-repo {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem 2.5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== NAVEGACIÓN ===== */
+    .repo-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 0 2rem 0;
+      border-bottom: 1px solid rgba(253, 187, 48, 0.08);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo-repo {
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #FDBB30;
+      text-decoration: none;
+    }
+
+    .logo-repo span {
+      font-weight: 300;
+      color: #666;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+    }
+
+    .nav-repo {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-weight: 500;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .nav-repo a {
+      color: #888;
+      text-decoration: none;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    .nav-repo a:hover,
+    .nav-repo a.active {
+      color: #FDBB30;
+    }
+
+    .nav-repo a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #FDBB30;
+    }
+
+    /* ===== TÍTULO ===== */
+    .repo-title {
+      font-weight: 700;
+      font-size: 2rem;
+      color: #FDBB30;
+      margin: 2rem 0 1.5rem 0;
+      letter-spacing: -0.02em;
+      border-bottom: 1px solid rgba(253, 187, 48, 0.05);
+      padding-bottom: 0.8rem;
+    }
+
+    .repo-title small {
+      font-weight: 300;
+      color: #666;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      margin-left: 1rem;
+    }
+
+    /* ===== BOTÓN + ===== */
+    .add-toggle {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 1rem;
+    }
+
+    .btn-toggle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(253, 187, 48, 0.12);
+      border: 2px solid rgba(253, 187, 48, 0.2);
+      color: #FDBB30;
+      font-size: 1.8rem;
+      font-weight: 300;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .btn-toggle:hover {
+      background: rgba(253, 187, 48, 0.2);
+      transform: rotate(90deg);
+      border-color: #FDBB30;
+    }
+
+    /* ===== FORMULARIO COLABSABLE ===== */
+    .collapse-form {
+      background: rgba(1, 4, 10, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(253, 187, 48, 0.08);
+      border-radius: 20px;
+      padding: 1.8rem 2rem;
+      margin-bottom: 2rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, padding 0.4s ease, opacity 0.3s ease;
+      opacity: 0;
+      padding: 0 2rem;
+    }
+
+    .collapse-form.visible {
+      max-height: 600px;
+      padding: 1.8rem 2rem;
+      opacity: 1;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .input-group {
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.3rem;
+    }
+
+    .input-group select,
+    .input-group input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 0.7rem 1rem;
+      color: #ddd;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .input-group select:focus,
+    .input-group input:focus {
+      border-color: rgba(253, 187, 48, 0.2);
+    }
+
+    .input-group select option {
+      background: #01040A;
+      color: #ddd;
+    }
+
+    .btn {
+      background: #FDBB30;
+      color: #01040A;
+      border: none;
+      border-radius: 12px;
+      padding: 0.7rem 2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      align-self: flex-end;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      background: #e6a820;
+      transform: translateY(-2px);
+    }
+
+    .form-hint {
+      margin-top: 0.8rem;
+      font-size: 0.7rem;
+      color: #555;
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== TABS ===== */
+    .tab-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      padding-bottom: 0.5rem;
+    }
+
+    .tab {
+      padding: 0.6rem 1.5rem;
+      border-radius: 40px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      color: #888;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+    }
+
+    .tab:hover {
+      color: #ddd;
+      border-color: rgba(253, 187, 48, 0.1);
+    }
+
+    .tab.active {
+      background: rgba(253, 187, 48, 0.08);
+      border-color: rgba(253, 187, 48, 0.15);
+      color: #FDBB30;
+    }
+
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== GALERÍA ===== */
+    .project-row {
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+      padding-bottom: 1.5rem;
+    }
+
+    .row-header {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #FDBB30;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    .row-header small {
+      font-weight: 300;
+      color: #555;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+    }
+
+    .row-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .gallery-item {
+      background: rgba(1, 4, 10, 0.6);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      transition: all 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-4px);
+      border-color: rgba(253, 187, 48, 0.08);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .media-container {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0a1a2e;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .media-container iframe,
+    .media-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: none;
+    }
+
+    .media-container iframe {
+      pointer-events: none;
+    }
+
+    .item-info {
+      padding: 0.8rem 1rem 1rem;
+    }
+
+    .item-info strong {
+      display: block;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #ddd;
+      margin-bottom: 0.1rem;
+    }
+
+    .item-info p {
+      font-size: 0.65rem;
+      color: #666;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .delete-btn {
+      background: rgba(255, 0, 0, 0.05);
+      border: 1px solid rgba(255, 0, 0, 0.05);
+      color: #666;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.6rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 0.3rem;
+    }
+
+    .delete-btn:hover {
+      background: rgba(255, 0, 0, 0.1);
+      color: #ff6b6b;
+      border-color: rgba(255, 0, 0, 0.1);
+    }
+
+    .note {
+      background: rgba(255, 255, 255, 0.02);
+      padding: 2rem;
+      border-radius: 16px;
+      text-align: center;
+      color: #555;
+      font-size: 0.85rem;
+      border: 1px dashed rgba(255, 255, 255, 0.03);
+    }
+
+    /* ===== FOOTER ===== */
+    .repo-footer {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.65rem;
+      color: #444;
+    }
+
+    .repo-footer .copy {
+      color: #555;
+    }
+
+    .repo-footer .social {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .repo-footer .social a {
+      color: #555;
+      text-decoration: none;
+      transition: color 0.3s;
+      letter-spacing: 0.05em;
+    }
+
+    .repo-footer .social a:hover {
+      color: #FDBB30;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .vertice-repo {
+        padding: 1rem 1.2rem;
+      }
+      .repo-nav {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.8rem;
+      }
+      .nav-repo {
+        justify-content: space-around;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      .form-row {
+        flex-direction: column;
+      }
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .collapse-form.visible {
+        padding: 1.2rem;
+      }
+      .row-grid {
+        grid-template-columns: 1fr;
+      }
+      .repo-title {
+        font-size: 1.5rem;
+      }
+      .repo-title small {
+        display: block;
+        margin-left: 0;
+        margin-top: 0.3rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .tab-bar {
+        gap: 0.3rem;
+      }
+      .tab {
+        font-size: 0.6rem;
+        padding: 0.4rem 1rem;
+      }
+      .btn-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="vertice-repo">
+
+    <!-- ===== NAVEGACIÓN ===== -->
+    <nav class="repo-nav">
+      <a href="index.html" class="logo-repo">
+        VÉRTICE <span>REPOSITORIO</span>
+      </a>
+      <ul class="nav-repo">
+        <li><a href="index.html">INICIO</a></li>
+        <li><a href="vertice-studio.html">STUDIO</a></li>
+        <li><a href="vertice-connect.html">CONNECT</a></li>
+        <li><a href="vertice-tech.html">TECH</a></li>
+        <li><a href="#" class="active">REPOSITORIO</a></li>
+      </ul>
+    </nav>
+
+    <!-- ===== TÍTULO ===== -->
+    <h1 class="repo-title">
+      REPOSITORIO DE CONTENIDO
+      <small>Gestión de links · Redes Sociales</small>
+    </h1>
+
+    <!-- ===== BOTÓN + ===== -->
+    <div class="add-toggle">
+      <button class="btn-toggle" id="toggleFormBtn">+</button>
+    </div>
+
+    <!-- ===== FORMULARIO COLABSABLE ===== -->
+    <div class="collapse-form" id="addForm">
+      <div class="form-row">
+        <div class="input-group">
+          <label>Tipo de contenido</label>
+          <select id="tipoSelect">
+            <option value="video">🎬 Video</option>
+            <option value="foto">📸 Fotografía</option>
+            <option value="spot">📺 Spot / Reel</option>
+            <option value="manual">📘 Manual de Marca</option>
+            <option value="post">📱 Post / Publicación</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Nombre / Título</label>
+          <input type="text" id="nombreInput" placeholder="Ej: Spot Vértice 2026">
+        </div>
+        <div class="input-group">
+          <label>Fecha / Plataforma</label>
+          <input type="text" id="fechaInput" placeholder="Ej: Instagram · Sesión 1 ">
+        </div>
+      </div>
+      <div class="form-row" style="margin-top: 1rem;">
+        <div class="input-group" style="flex:2;">
+          <label>🔗 Enlace (URL del contenido)</label>
+          <input type="text" id="mediaLink" placeholder="https://www.instagram.com/p/... o https://youtube.com/...">
+        </div>
+        <button class="btn" id="addMediaBtn">➕ Agregar</button>
+      </div>
+      <p class="form-hint">* Se requiere clave para agregar contenido. Los elementos se guardan en el repositorio local.</p>
+    </div>
+
+    <!-- ===== TABS ===== -->
+    <div class="tab-bar">
+      <div class="tab active" data-tab="videos">🎬 Videos</div>
+      <div class="tab" data-tab="fotos">📸 Fotos</div>
+      <div class="tab" data-tab="spots">📺 Spots / Reels</div>
+      <div class="tab" data-tab="manuales">📘 Manuales</div>
+      <div class="tab" data-tab="posts">📱 Posts</div>
+    </div>
+
+    <div id="tabVideos" class="tab-pane active"><div id="videosContainer"></div></div>
+    <div id="tabFotos" class="tab-pane"><div id="fotosContainer"></div></div>
+    <div id="tabSpots" class="tab-pane"><div id="spotsContainer"></div></div>
+    <div id="tabManuales" class="tab-pane"><div id="manualesContainer"></div></div>
+    <div id="tabPosts" class="tab-pane"><div id="postsContainer"></div></div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="repo-footer">
+      <span class="copy">© 2026 Vértice Collective · Repositorio de Contenido</span>
+      <div class="social">
+        <a href="#">IG</a>
+        <a href="#">YT</a>
+        <a href="#">VIMEO</a>
+        <a href="#">LINKEDIN</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ===== VARIABLES GLOBALES =====
+      let galleryItems = [];
+      const STORAGE_KEY = 'vertice_repo_items';
+
+      // ===== ELEMENTOS DOM =====
+      const toggleBtn = document.getElementById('toggleFormBtn');
+      const formPanel = document.getElementById('addForm');
+      const tipoSelect = document.getElementById('tipoSelect');
+      const nombreInput = document.getElementById('nombreInput');
+      const fechaInput = document.getElementById('fechaInput');
+      const mediaLink = document.getElementById('mediaLink');
+      const addBtn = document.getElementById('addMediaBtn');
+
+      const containers = {
+        videos: document.getElementById('videosContainer'),
+        fotos: document.getElementById('fotosContainer'),
+        spots: document.getElementById('spotsContainer'),
+        manuales: document.getElementById('manualesContainer'),
+        posts: document.getElementById('postsContainer')
+      };
+
+      const tabs = document.querySelectorAll('.tab');
+      const panes = document.querySelectorAll('.tab-pane');
+
+      // ===== CLAVE DE ADMINISTRACIÓN =====
+      const ADMIN_KEY = 'vertice2026';
+
+      // ===== CARGAR DATOS DESDE LOCALSTORAGE =====
+      function loadData() {
+        try {
+          const stored = localStorage.getItem(STORAGE_KEY);
+          if (stored) {
+            galleryItems = JSON.parse(stored);
+          } else {
+            // Datos de ejemplo
+            galleryItems = [
+              { id: Date.now() + 1, tipo: 'video', nombre: 'Showreel Vértice 2026', fecha: 'YouTube · 2026', url: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
+              { id: Date.now() + 2, tipo: 'foto', nombre: 'Sesión de estudio', fecha: 'Instagram · mayo 2026', url: 'https://images.pexels.com/photos/66134/pexels-photo-66134.jpeg?auto=compress&cs=tinysrgb&w=600' },
+              { id: Date.now() + 3, tipo: 'spot', nombre: 'Spot Vértice Connect', fecha: 'Reels · abril 2026', url: 'https://images.pexels.com/photos/18045768/pexels-photo-18045768.jpeg?auto=compress&cs=tinysrgb&w=600' },
+              { id: Date.now() + 4, tipo: 'manual', nombre: 'Manual de Marca Vértice', fecha: 'PDF · marzo 2026', url: 'https://placehold.co/600x400?text=Manual+VERTICE' },
+              { id: Date.now() + 5, tipo: 'post', nombre: 'Lanzamiento Vértice Tech', fecha: 'LinkedIn · 2026', url: 'https://placehold.co/600x400?text=Post+Tech' }
+            ];
+            saveData();
+          }
+        } catch (e) {
+          galleryItems = [];
+        }
+        renderGalleries();
+      }
+
+      // ===== GUARDAR DATOS EN LOCALSTORAGE =====
+      function saveData() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(galleryItems));
+        } catch (e) {
+          console.error('Error al guardar:', e);
+        }
+      }
+
+      // ===== RENDERIZAR GALERÍAS =====
+      function renderCategory(items, container, tipoLabel) {
+        if (!container) return;
+        if (!items || items.length === 0) {
+          container.innerHTML = `<div class="note">📭 No hay elementos en "${tipoLabel}".</div>`;
+          return;
+        }
+
+        // Agrupar por nombre
+        const groups = {};
+        items.forEach(item => {
+          const key = item.nombre.trim();
+          if (!groups[key]) groups[key] = [];
+          groups[key].push(item);
+        });
+
+        let html = '';
+        for (let groupName in groups) {
+          const groupItems = groups[groupName];
+          const firstDate = groupItems[0].fecha;
+          html += `<div class="project-row">`;
+          html += `<div class="row-header">${escapeHtml(groupName)} <small>${escapeHtml(firstDate)}</small></div>`;
+          html += `<div class="row-grid">`;
+          groupItems.forEach((item) => {
+            const mediaHtml = getMediaHtml(item.url, item.nombre);
+            html += `
+              <div class="gallery-item" data-id="${item.id}">
+                <div class="media-container">${mediaHtml}</div>
+                <div class="item-info">
+                  <strong>${escapeHtml(item.nombre)}</strong>
+                  <p>${escapeHtml(item.fecha)}</p>
+                  <button class="delete-btn" data-id="${item.id}">🗑️ Eliminar</button>
+                </div>
+              </div>
+            `;
+          });
+          html += `</div></div>`;
+        }
+        container.innerHTML = html;
+        attachDeleteEvents();
+      }
+
+      function getMediaHtml(url, alt) {
+        if (!url) return '<span style="color:#333;">Sin vista previa</span>';
+        // YouTube embed
+        if (url.includes('youtube.com/embed') || url.includes('youtu.be')) {
+          let embedUrl = url;
+          if (url.includes('youtu.be')) {
+            const id = url.split('/').pop().split('?')[0];
+            embedUrl = `https://www.youtube.com/embed/${id}`;
+          }
+          if (url.includes('watch?v=')) {
+            const id = url.split('v=')[1].split('&')[0];
+            embedUrl = `https://www.youtube.com/embed/${id}`;
+          }
+          return `<iframe src="${embedUrl}" allowfullscreen loading="lazy"></iframe>`;
+        }
+        // Imagen
+        return `<img src="${url}" alt="${escapeHtml(alt)}" loading="lazy" onerror="this.src='https://placehold.co/600x400?text=Sin+preview'">`;
+      }
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+          if (m === '&') return '&amp;';
+          if (m === '<') return '&lt;';
+          if (m === '>') return '&gt;';
+          return m;
+        });
+      }
+
+      function renderGalleries() {
+        const tipos = {
+          videos: { items: galleryItems.filter(i => i.tipo === 'video'), label: 'Videos' },
+          fotos: { items: galleryItems.filter(i => i.tipo === 'foto'), label: 'Fotos' },
+          spots: { items: galleryItems.filter(i => i.tipo === 'spot'), label: 'Spots / Reels' },
+          manuales: { items: galleryItems.filter(i => i.tipo === 'manual'), label: 'Manuales' },
+          posts: { items: galleryItems.filter(i => i.tipo === 'post'), label: 'Posts' }
+        };
+
+        for (let key in tipos) {
+          renderCategory(tipos[key].items, containers[key], tipos[key].label);
+        }
+      }
+
+      // ===== ELIMINAR =====
+      function attachDeleteEvents() {
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+          btn.removeEventListener('click', handleDelete);
+          btn.addEventListener('click', handleDelete);
+        });
+      }
+
+      async function handleDelete(e) {
+        e.stopPropagation();
+        const id = parseInt(this.getAttribute('data-id'));
+        if (!id) return;
+
+        const clave = prompt('🔐 Ingrese la clave para eliminar:');
+        if (clave !== ADMIN_KEY) {
+          alert('❌ Clave incorrecta.');
+          return;
+        }
+
+        if (confirm('¿Eliminar este elemento?')) {
+          galleryItems = galleryItems.filter(item => item.id !== id);
+          saveData();
+          renderGalleries();
+        }
+      }
+
+      // ===== AGREGAR =====
+      async function addItem() {
+        const clave = prompt('🔐 Ingrese la clave de administrador:');
+        if (clave !== ADMIN_KEY) {
+          alert('❌ Clave incorrecta.');
+          return;
+        }
+
+        const tipo = tipoSelect.value;
+        const nombre = nombreInput.value.trim();
+        const fecha = fechaInput.value.trim();
+        const url = mediaLink.value.trim();
+
+        if (!nombre || !fecha || !url) {
+          alert('⚠️ Completa todos los campos: nombre, fecha y enlace.');
+          return;
+        }
+
+        const newItem = {
+          id: Date.now(),
+          tipo: tipo,
+          nombre: nombre,
+          fecha: fecha,
+          url: url
+        };
+
+        galleryItems.push(newItem);
+        saveData();
+        renderGalleries();
+
+        // Limpiar formulario
+        nombreInput.value = '';
+        fechaInput.value = '';
+        mediaLink.value = '';
+        formPanel.classList.remove('visible');
+
+        alert('✅ Contenido agregado correctamente.');
+      }
+
+      // ===== TABS =====
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          tabs.forEach(t => t.classList.remove('active'));
+          panes.forEach(p => p.classList.remove('active'));
+          this.classList.add('active');
+
+          const target = this.getAttribute('data-tab');
+          const targetPane = document.getElementById('tab' + target.charAt(0).toUpperCase() + target.slice(1));
+          if (targetPane) targetPane.classList.add('active');
+        });
+      });
+
+      // ===== TOGGLE FORMULARIO =====
+      toggleBtn.addEventListener('click', () => {
+        formPanel.classList.toggle('visible');
+        toggleBtn.textContent = formPanel.classList.contains('visible') ? '✕' : '+';
+        toggleBtn.style.transform = formPanel.classList.contains('visible') ? 'rotate(0deg)' : 'rotate(0deg)';
+      });
+
+      // ===== EVENTOS =====
+      addBtn.addEventListener('click', addItem);
+
+      // Enter en campos
+      document.querySelectorAll('#nombreInput, #fechaInput, #mediaLink').forEach(input => {
+        input.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') addItem();
+        });
+      });
+
+      // ===== INICIALIZAR =====
+      loadData();
+
+      console.log('📁 Vértice Repositorio · Cargado correctamente');
+    })();
+  </script>
+</body>
+</html>
