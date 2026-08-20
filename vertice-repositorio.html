@@ -6,22 +6,21 @@
   <title>Vertice · Repositorio de Contenido</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* ===== RESET Y BASE ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       background: #01040A;
       color: #ffffff;
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Inter', sans-serif;
       overflow-x: hidden;
       min-height: 100vh;
+      cursor: default;
     }
+
+    a { text-decoration: none; color: inherit; }
 
     /* ===== LOADING OVERLAY ===== */
     .loading-overlay {
@@ -41,19 +40,13 @@
       pointer-events: none;
       transition: opacity 0.4s ease;
     }
-
-    .loading-overlay.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-
+    .loading-overlay.active { opacity: 1; pointer-events: all; }
     .loading-overlay img {
       width: 120px;
       height: 120px;
       object-fit: contain;
       animation: pulse-loading 1.2s ease-in-out infinite;
     }
-
     .loading-overlay .loading-text {
       margin-top: 1.5rem;
       font-size: 0.8rem;
@@ -62,12 +55,7 @@
       letter-spacing: 0.2em;
       text-transform: uppercase;
     }
-
-    .loading-overlay .loading-text span {
-      color: #FDBB30;
-      font-weight: 600;
-    }
-
+    .loading-overlay .loading-text span { color: #FDBB30; font-weight: 600; }
     @keyframes pulse-loading {
       0%, 100% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.08); opacity: 0.8; }
@@ -93,22 +81,15 @@
       flex-wrap: wrap;
       gap: 1rem;
     }
-
     .logo-repo {
       font-size: 1.6rem;
       font-weight: 900;
       letter-spacing: -0.03em;
       color: #FDBB30;
+      font-family: 'Outfit', sans-serif;
       text-decoration: none;
     }
-
-    .logo-repo span {
-      font-weight: 300;
-      color: #666;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-    }
-
+    .logo-repo span { font-weight: 300; color: #666; font-size: 0.7rem; letter-spacing: 0.2em; }
     .nav-repo {
       display: flex;
       gap: 2rem;
@@ -118,19 +99,8 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
-
-    .nav-repo a {
-      color: #888;
-      text-decoration: none;
-      transition: color 0.3s;
-      position: relative;
-    }
-
-    .nav-repo a:hover,
-    .nav-repo a.active {
-      color: #FDBB30;
-    }
-
+    .nav-repo a { color: #ffffff; transition: color 0.3s; position: relative; }
+    .nav-repo a:hover, .nav-repo a.active { color: #FDBB30; }
     .nav-repo a.active::after {
       content: '';
       position: absolute;
@@ -150,23 +120,25 @@
       letter-spacing: -0.02em;
       border-bottom: 1px solid rgba(253, 187, 48, 0.05);
       padding-bottom: 0.8rem;
+      font-family: 'Outfit', sans-serif;
     }
-
     .repo-title small {
       font-weight: 300;
-      color: #666;
+      color: #888;
       font-size: 0.9rem;
       letter-spacing: 0.05em;
       margin-left: 1rem;
+      font-family: 'Inter', sans-serif;
     }
 
     /* ===== BOTÓN + ===== */
     .add-toggle {
       display: flex;
       justify-content: flex-end;
+      gap: 0.8rem;
       margin-bottom: 1rem;
+      flex-wrap: wrap;
     }
-
     .btn-toggle {
       width: 48px;
       height: 48px;
@@ -183,11 +155,26 @@
       justify-content: center;
       line-height: 1;
     }
-
     .btn-toggle:hover {
       background: rgba(253, 187, 48, 0.2);
       transform: rotate(90deg);
       border-color: #FDBB30;
+    }
+    .btn-export {
+      background: rgba(253, 187, 48, 0.08);
+      border: 1px solid rgba(253, 187, 48, 0.1);
+      color: #FDBB30;
+      padding: 0.6rem 1.5rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-export:hover {
+      background: rgba(253, 187, 48, 0.15);
+      transform: scale(1.05);
     }
 
     /* ===== FORMULARIO COLABSABLE ===== */
@@ -204,24 +191,20 @@
       opacity: 0;
       padding: 0 2rem;
     }
-
     .collapse-form.visible {
       max-height: 600px;
       padding: 1.8rem 2rem;
       opacity: 1;
     }
-
     .form-row {
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
     }
-
     .input-group {
       flex: 1;
       min-width: 180px;
     }
-
     .input-group label {
       display: block;
       font-size: 0.7rem;
@@ -231,38 +214,29 @@
       letter-spacing: 0.1em;
       margin-bottom: 0.3rem;
     }
-
-    .input-group select,
-    .input-group input {
+    .input-group select, .input-group input {
       width: 100%;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 12px;
       padding: 0.7rem 1rem;
       color: #ddd;
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 0.85rem;
       outline: none;
       transition: border-color 0.3s;
     }
-
-    .input-group select:focus,
-    .input-group input:focus {
+    .input-group select:focus, .input-group input:focus {
       border-color: rgba(253, 187, 48, 0.2);
     }
-
-    .input-group select option {
-      background: #01040A;
-      color: #ddd;
-    }
-
+    .input-group select option { background: #01040A; color: #ddd; }
     .btn {
       background: #FDBB30;
       color: #01040A;
       border: none;
       border-radius: 12px;
       padding: 0.7rem 2rem;
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 700;
       font-size: 0.8rem;
       cursor: pointer;
@@ -270,12 +244,10 @@
       align-self: flex-end;
       white-space: nowrap;
     }
-
     .btn:hover {
       background: #e6a820;
       transform: translateY(-2px);
     }
-
     .form-hint {
       margin-top: 0.8rem;
       font-size: 0.7rem;
@@ -292,7 +264,6 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.03);
       padding-bottom: 0.5rem;
     }
-
     .tab {
       padding: 0.6rem 1.5rem;
       border-radius: 40px;
@@ -305,28 +276,16 @@
       cursor: pointer;
       transition: all 0.3s ease;
       text-transform: uppercase;
+      font-family: 'Inter', sans-serif;
     }
-
-    .tab:hover {
-      color: #ddd;
-      border-color: rgba(253, 187, 48, 0.1);
-    }
-
+    .tab:hover { color: #ddd; border-color: rgba(253, 187, 48, 0.1); }
     .tab.active {
       background: rgba(253, 187, 48, 0.08);
       border-color: rgba(253, 187, 48, 0.15);
       color: #FDBB30;
     }
-
-    .tab-pane {
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .tab-pane.active {
-      display: block;
-    }
-
+    .tab-pane { display: none; animation: fadeIn 0.3s ease; }
+    .tab-pane.active { display: block; }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -338,7 +297,6 @@
       column-gap: 1.2rem;
       padding: 0.5rem 0;
     }
-
     .pinterest-item {
       break-inside: avoid;
       margin-bottom: 1.2rem;
@@ -351,13 +309,11 @@
       display: inline-block;
       width: 100%;
     }
-
     .pinterest-item:hover {
       transform: translateY(-4px);
       border-color: rgba(253, 187, 48, 0.08);
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
-
     .pinterest-item .media-container {
       width: 100%;
       background: #0a1a2e;
@@ -367,7 +323,6 @@
       justify-content: center;
       position: relative;
     }
-
     .pinterest-item .media-container iframe,
     .pinterest-item .media-container img {
       width: 100%;
@@ -375,43 +330,16 @@
       display: block;
       border: none;
     }
+    .pinterest-item .media-container iframe { aspect-ratio: 16 / 9; }
+    .pinterest-item .media-container img { object-fit: cover; }
 
-    .pinterest-item .media-container iframe {
-      aspect-ratio: 16 / 9;
-    }
-
-    .pinterest-item .media-container img {
-      object-fit: cover;
-    }
-
-    /* Alturas dinámicas según plataforma */
-    .pinterest-item .media-container.instagram {
-      aspect-ratio: 4 / 5;
-    }
-
-    .pinterest-item .media-container.tiktok {
-      aspect-ratio: 9 / 16;
-    }
-
-    .pinterest-item .media-container.youtube {
-      aspect-ratio: 16 / 9;
-    }
-
-    .pinterest-item .media-container.vimeo {
-      aspect-ratio: 16 / 9;
-    }
-
-    .pinterest-item .media-container.vertical {
-      aspect-ratio: 9 / 16;
-    }
-
-    .pinterest-item .media-container.square {
-      aspect-ratio: 1 / 1;
-    }
-
-    .pinterest-item .media-container.landscape {
-      aspect-ratio: 16 / 9;
-    }
+    .pinterest-item .media-container.instagram { aspect-ratio: 4 / 5; }
+    .pinterest-item .media-container.tiktok { aspect-ratio: 9 / 16; }
+    .pinterest-item .media-container.youtube { aspect-ratio: 16 / 9; }
+    .pinterest-item .media-container.vimeo { aspect-ratio: 16 / 9; }
+    .pinterest-item .media-container.vertical { aspect-ratio: 9 / 16; }
+    .pinterest-item .media-container.square { aspect-ratio: 1 / 1; }
+    .pinterest-item .media-container.landscape { aspect-ratio: 16 / 9; }
 
     .pinterest-item .platform-badge {
       position: absolute;
@@ -428,35 +356,31 @@
       letter-spacing: 0.05em;
       text-transform: uppercase;
       z-index: 2;
+      font-family: 'Inter', sans-serif;
     }
-
-    .pinterest-item .item-info {
-      padding: 0.8rem 1rem 1rem;
-    }
-
+    .pinterest-item .item-info { padding: 0.8rem 1rem 1rem; }
     .pinterest-item .item-info strong {
       display: block;
       font-weight: 600;
       font-size: 0.85rem;
-      color: #ddd;
+      color: #ffffff;
       margin-bottom: 0.1rem;
+      font-family: 'Outfit', sans-serif;
     }
-
     .pinterest-item .item-info p {
       font-size: 0.65rem;
-      color: #666;
+      color: #888;
       font-weight: 300;
       letter-spacing: 0.05em;
       text-transform: uppercase;
+      font-family: 'Inter', sans-serif;
     }
-
     .pinterest-item .item-actions {
       display: flex;
       gap: 0.5rem;
       padding: 0 1rem 1rem;
       flex-wrap: wrap;
     }
-
     .pinterest-item .item-actions .open-btn {
       background: rgba(253, 187, 48, 0.05);
       border: 1px solid rgba(253, 187, 48, 0.05);
@@ -470,13 +394,12 @@
       display: inline-flex;
       align-items: center;
       gap: 0.3rem;
+      font-family: 'Inter', sans-serif;
     }
-
     .pinterest-item .item-actions .open-btn:hover {
       background: rgba(253, 187, 48, 0.1);
       border-color: rgba(253, 187, 48, 0.1);
     }
-
     .pinterest-item .delete-btn {
       background: rgba(255, 0, 0, 0.05);
       border: 1px solid rgba(255, 0, 0, 0.05);
@@ -486,14 +409,13 @@
       font-size: 0.6rem;
       cursor: pointer;
       transition: all 0.3s ease;
+      font-family: 'Inter', sans-serif;
     }
-
     .pinterest-item .delete-btn:hover {
       background: rgba(255, 0, 0, 0.1);
       color: #ff6b6b;
       border-color: rgba(255, 0, 0, 0.1);
     }
-
     .note {
       background: rgba(255, 255, 255, 0.02);
       padding: 2rem;
@@ -503,6 +425,39 @@
       font-size: 0.85rem;
       border: 1px dashed rgba(255, 255, 255, 0.03);
       margin: 1rem 0;
+    }
+
+    /* ===== CURSOR PERSONALIZADO ===== */
+    .custom-cursor {
+      position: fixed;
+      pointer-events: none;
+      z-index: 999;
+      background: rgba(253, 187, 48, 0.02);
+      border: 1px solid rgba(253, 187, 48, 0.05);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+      backdrop-filter: blur(2px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FDBB30;
+      font-size: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      opacity: 0;
+      will-change: transform;
+      font-family: 'Inter', sans-serif;
+    }
+    .custom-cursor.visible { opacity: 1; }
+    .custom-cursor.hover {
+      width: 80px;
+      height: 80px;
+      background: rgba(253, 187, 48, 0.05);
+      border-color: rgba(253, 187, 48, 0.1);
     }
 
     /* ===== FOOTER ===== */
@@ -516,99 +471,41 @@
       gap: 1rem;
       font-size: 0.65rem;
       color: #444;
+      font-family: 'Inter', sans-serif;
     }
-
-    .repo-footer .copy {
-      color: #555;
-    }
-
-    .repo-footer .social {
-      display: flex;
-      gap: 1.5rem;
-    }
-
+    .repo-footer .copy { color: #555; }
+    .repo-footer .social { display: flex; gap: 1.5rem; }
     .repo-footer .social a {
       color: #555;
       text-decoration: none;
       transition: color 0.3s;
       letter-spacing: 0.05em;
     }
-
-    .repo-footer .social a:hover {
-      color: #FDBB30;
-    }
+    .repo-footer .social a:hover { color: #FDBB30; }
 
     /* ===== RESPONSIVE ===== */
-    @media (max-width: 1024px) {
-      .pinterest-grid {
-        column-count: 3;
-      }
-    }
-
+    @media (max-width: 1024px) { .pinterest-grid { column-count: 3; } }
     @media (max-width: 768px) {
-      .vertice-repo {
-        padding: 1rem 1.2rem;
-      }
-      .repo-nav {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0.8rem;
-      }
-      .nav-repo {
-        justify-content: space-around;
-        gap: 0.5rem;
-        flex-wrap: wrap;
-      }
-      .form-row {
-        flex-direction: column;
-      }
-      .btn {
-        width: 100%;
-        justify-content: center;
-      }
-      .collapse-form.visible {
-        padding: 1.2rem;
-      }
-      .pinterest-grid {
-        column-count: 2;
-        column-gap: 0.8rem;
-      }
-      .pinterest-item {
-        margin-bottom: 0.8rem;
-      }
-      .repo-title {
-        font-size: 1.5rem;
-      }
-      .repo-title small {
-        display: block;
-        margin-left: 0;
-        margin-top: 0.3rem;
-      }
+      .vertice-repo { padding: 1rem 1.2rem; }
+      .repo-nav { flex-direction: column; align-items: stretch; gap: 0.8rem; }
+      .nav-repo { justify-content: space-around; gap: 0.5rem; flex-wrap: wrap; }
+      .form-row { flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
+      .collapse-form.visible { padding: 1.2rem; }
+      .pinterest-grid { column-count: 2; column-gap: 0.8rem; }
+      .pinterest-item { margin-bottom: 0.8rem; }
+      .repo-title { font-size: 1.5rem; }
+      .repo-title small { display: block; margin-left: 0; margin-top: 0.3rem; }
+      .custom-cursor { display: none; }
     }
-
     @media (max-width: 480px) {
-      .tab-bar {
-        gap: 0.3rem;
-      }
-      .tab {
-        font-size: 0.6rem;
-        padding: 0.4rem 1rem;
-      }
-      .btn-toggle {
-        width: 40px;
-        height: 40px;
-        font-size: 1.4rem;
-      }
-      .pinterest-grid {
-        column-count: 1;
-        max-width: 400px;
-        margin: 0 auto;
-      }
-      .loading-overlay img {
-        width: 80px;
-        height: 80px;
-      }
+      .tab-bar { gap: 0.3rem; }
+      .tab { font-size: 0.6rem; padding: 0.4rem 1rem; }
+      .btn-toggle { width: 40px; height: 40px; font-size: 1.4rem; }
+      .pinterest-grid { column-count: 1; max-width: 400px; margin: 0 auto; }
+      .loading-overlay img { width: 80px; height: 80px; }
     }
+    @media (prefers-reduced-motion: reduce) { .custom-cursor { display: none !important; } }
   </style>
 </head>
 <body>
@@ -638,11 +535,12 @@
     <!-- ===== TÍTULO ===== -->
     <h1 class="repo-title">
       REPOSITORIO DE CONTENIDO
-      <small>Vistas previas</small>
+      <small>Gestión de recursos · Vértice Collective</small>
     </h1>
 
-    <!-- ===== BOTÓN + ===== -->
+    <!-- ===== BOTONES ===== -->
     <div class="add-toggle">
+      <button class="btn-export" id="exportBtn">📥 Exportar CSV</button>
       <button class="btn-toggle" id="toggleFormBtn">+</button>
     </div>
 
@@ -652,11 +550,15 @@
         <div class="input-group">
           <label>Tipo de contenido</label>
           <select id="tipoSelect">
-            <option value="video">🎬 Video (YouTube/Vimeo)</option>
+            <option value="video">🎬 Video</option>
             <option value="foto">📸 Fotografía</option>
             <option value="spot">📺 Spot / Reel</option>
             <option value="manual">📘 Manual de Marca</option>
             <option value="post">📱 Post / Publicación</option>
+            <option value="proyecto">📌 Proyecto</option>
+            <option value="articulo">📄 Artículo</option>
+            <option value="ponencia">🎤 Ponencia</option>
+            <option value="producto">📦 Producto</option>
           </select>
         </div>
         <div class="input-group">
@@ -675,7 +577,7 @@
         </div>
         <button class="btn" id="addMediaBtn">➕ Agregar</button>
       </div>
-      <p class="form-hint">* Se requiere clave para agregar contenido. Los elementos se guardan en el repositorio local.</p>
+      <p class="form-hint">* Se requiere clave para agregar contenido. Los elementos se guardan en el repositorio.</p>
     </div>
 
     <!-- ===== TABS ===== -->
@@ -706,6 +608,9 @@
 
   </div>
 
+  <!-- ===== CURSOR PERSONALIZADO ===== -->
+  <div class="custom-cursor" id="customCursor">EXPLORAR</div>
+
   <!-- ===== JAVASCRIPT ===== -->
   <script>
     (function() {
@@ -722,20 +627,18 @@
         loadingOverlay.classList.remove('active');
       }
 
-      // Mostrar loading al inicio
-      showLoading();
-
-      // Ocultar cuando la página esté completamente cargada
       window.addEventListener('load', function() {
         setTimeout(hideLoading, 600);
       });
 
       // ===== VARIABLES GLOBALES =====
       let galleryItems = [];
-      const STORAGE_KEY = 'vertice_repo_items_pinterest';
+      const API_URL = 'repositorio.php';
+      const ADMIN_KEY = 'vertice2026';
 
       // ===== ELEMENTOS DOM =====
       const toggleBtn = document.getElementById('toggleFormBtn');
+      const exportBtn = document.getElementById('exportBtn');
       const formPanel = document.getElementById('addForm');
       const tipoSelect = document.getElementById('tipoSelect');
       const nombreInput = document.getElementById('nombreInput');
@@ -754,31 +657,15 @@
       const tabs = document.querySelectorAll('.tab');
       const panes = document.querySelectorAll('.tab-pane');
 
-      // ===== CLAVE DE ADMINISTRACIÓN =====
-      const ADMIN_KEY = 'vertice2026';
-
       // ===== DETECTAR PLATAFORMA Y ASPECT RATIO =====
       function detectPlatform(url) {
         if (!url) return { type: 'link', aspect: 'landscape', label: 'Enlace' };
-
-        if (url.includes('youtube.com') || url.includes('youtu.be')) {
-          return { type: 'youtube', aspect: 'youtube', label: 'YouTube' };
-        }
-        if (url.includes('vimeo.com')) {
-          return { type: 'vimeo', aspect: 'vimeo', label: 'Vimeo' };
-        }
-        if (url.includes('instagram.com/p/') || url.includes('instagram.com/reel/')) {
-          return { type: 'instagram', aspect: 'instagram', label: 'Instagram' };
-        }
-        if (url.includes('tiktok.com')) {
-          return { type: 'tiktok', aspect: 'tiktok', label: 'TikTok' };
-        }
-        if (url.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i)) {
-          return { type: 'image', aspect: 'landscape', label: 'Imagen' };
-        }
-        if (url.includes('linkedin.com')) {
-          return { type: 'linkedin', aspect: 'landscape', label: 'LinkedIn' };
-        }
+        if (url.includes('youtube.com') || url.includes('youtu.be')) return { type: 'youtube', aspect: 'youtube', label: 'YouTube' };
+        if (url.includes('vimeo.com')) return { type: 'vimeo', aspect: 'vimeo', label: 'Vimeo' };
+        if (url.includes('instagram.com/p/') || url.includes('instagram.com/reel/')) return { type: 'instagram', aspect: 'instagram', label: 'Instagram' };
+        if (url.includes('tiktok.com')) return { type: 'tiktok', aspect: 'tiktok', label: 'TikTok' };
+        if (url.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i)) return { type: 'image', aspect: 'landscape', label: 'Imagen' };
+        if (url.includes('linkedin.com')) return { type: 'linkedin', aspect: 'landscape', label: 'LinkedIn' };
         return { type: 'link', aspect: 'landscape', label: 'Enlace' };
       }
 
@@ -833,38 +720,25 @@
         });
       }
 
-      // ===== CARGAR DATOS =====
-      function loadData() {
+      // ===== CARGAR DATOS DESDE EL SERVIDOR =====
+      async function loadData() {
         try {
-          const stored = localStorage.getItem(STORAGE_KEY);
-          if (stored) {
-            galleryItems = JSON.parse(stored);
+          const response = await fetch(`${API_URL}?accion=listar`);
+          const result = await response.json();
+          if (result.success) {
+            galleryItems = result.data;
           } else {
-            // Datos de ejemplo con diferentes proporciones
-            galleryItems = [
-              { id: Date.now() + 1, tipo: 'video', nombre: 'Showreel Vertice 2026', fecha: 'YouTube · 2026', url: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
-              { id: Date.now() + 2, tipo: 'foto', nombre: 'Sesión de estudio', fecha: 'Instagram · Sesion 2026', url: 'https://images.pexels.com/photos/66134/pexels-photo-66134.jpeg?auto=compress&cs=tinysrgb&w=600' },
-              { id: Date.now() + 3, tipo: 'spot', nombre: 'Spot Vertice Connect', fecha: 'Reels · Sesion 2026', url: 'https://www.instagram.com/p/C9X2Yz4xXxX/' },
-              { id: Date.now() + 4, tipo: 'manual', nombre: 'Manual de Marca Vertice', fecha: 'PDF · Sesion 2026', url: 'https://placehold.co/600x900?text=Manual+VERTICE' },
-              { id: Date.now() + 5, tipo: 'post', nombre: 'Lanzamiento Vertice Tech', fecha: 'LinkedIn · 2026', url: 'https://placehold.co/600x300?text=Post+Tech' }
-            ];
-            saveData();
+            console.error('Error al cargar datos:', result.error);
+            galleryItems = [];
           }
         } catch (e) {
+          console.error('Error de conexión:', e);
           galleryItems = [];
         }
         renderGalleries();
       }
 
-      function saveData() {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(galleryItems));
-        } catch (e) {
-          console.error('Error al guardar:', e);
-        }
-      }
-
-      // ===== RENDERIZAR GALERÍA ESTILO PINTEREST =====
+      // ===== RENDERIZAR GALERÍA =====
       function renderCategory(items, container, tipoLabel) {
         if (!container) return;
         if (!items || items.length === 0) {
@@ -926,29 +800,40 @@
 
       async function handleDelete(e) {
         e.stopPropagation();
-        const id = parseInt(this.getAttribute('data-id'));
+        const id = this.getAttribute('data-id');
         if (!id) return;
 
         const clave = prompt('🔐 Ingrese la clave para eliminar:');
-        if (clave !== ADMIN_KEY) {
-          alert('❌ Clave incorrecta.');
-          return;
-        }
+        if (!clave) return;
 
-        if (confirm('¿Eliminar este elemento?')) {
-          galleryItems = galleryItems.filter(item => item.id !== id);
-          saveData();
-          renderGalleries();
+        try {
+          const formData = new FormData();
+          formData.append('accion', 'eliminar');
+          formData.append('clave', clave);
+          formData.append('id', id);
+
+          const response = await fetch(API_URL, {
+            method: 'POST',
+            body: formData
+          });
+          const result = await response.json();
+
+          if (result.success) {
+            await loadData();
+            alert('✅ Elemento eliminado correctamente.');
+          } else {
+            alert('❌ Error: ' + (result.error || 'Clave incorrecta'));
+          }
+        } catch (e) {
+          alert('❌ Error de conexión');
+          console.error(e);
         }
       }
 
       // ===== AGREGAR =====
       async function addItem() {
         const clave = prompt('🔐 Ingrese la clave de administrador:');
-        if (clave !== ADMIN_KEY) {
-          alert('❌ Clave incorrecta.');
-          return;
-        }
+        if (!clave) return;
 
         const tipo = tipoSelect.value;
         const nombre = nombreInput.value.trim();
@@ -960,24 +845,56 @@
           return;
         }
 
-        const newItem = {
-          id: Date.now(),
-          tipo: tipo,
-          nombre: nombre,
-          fecha: fecha,
-          url: url
-        };
+        try {
+          const formData = new FormData();
+          formData.append('accion', 'agregar');
+          formData.append('clave', clave);
+          formData.append('tipo', tipo);
+          formData.append('nombre', nombre);
+          formData.append('fecha', fecha);
+          formData.append('url', url);
 
-        galleryItems.push(newItem);
-        saveData();
-        renderGalleries();
+          const response = await fetch(API_URL, {
+            method: 'POST',
+            body: formData
+          });
+          const result = await response.json();
 
-        nombreInput.value = '';
-        fechaInput.value = '';
-        mediaLink.value = '';
-        formPanel.classList.remove('visible');
+          if (result.success) {
+            nombreInput.value = '';
+            fechaInput.value = '';
+            mediaLink.value = '';
+            formPanel.classList.remove('visible');
+            await loadData();
+            alert('✅ Contenido agregado correctamente.');
+          } else {
+            alert('❌ Error: ' + (result.error || 'Clave incorrecta'));
+          }
+        } catch (e) {
+          alert('❌ Error de conexión');
+          console.error(e);
+        }
+      }
 
-        alert('✅ Contenido agregado correctamente.');
+      // ===== EXPORTAR CSV =====
+      async function exportCSV() {
+        try {
+          const response = await fetch(`${API_URL}?accion=exportar_csv`);
+          const result = await response.json();
+          if (result.success && result.csv) {
+            const blob = new Blob([result.csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `repositorio_${new Date().toISOString().slice(0,10)}.csv`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+          } else {
+            alert('❌ Error al exportar: ' + (result.error || 'Sin datos'));
+          }
+        } catch (e) {
+          alert('❌ Error de conexión');
+          console.error(e);
+        }
       }
 
       // ===== TABS =====
@@ -993,14 +910,14 @@
         });
       });
 
-      // ===== TOGGLE FORMULARIO =====
+      // ===== EVENTOS =====
       toggleBtn.addEventListener('click', () => {
         formPanel.classList.toggle('visible');
         toggleBtn.textContent = formPanel.classList.contains('visible') ? '✕' : '+';
       });
 
-      // ===== EVENTOS =====
       addBtn.addEventListener('click', addItem);
+      exportBtn.addEventListener('click', exportCSV);
 
       document.querySelectorAll('#nombreInput, #fechaInput, #mediaLink').forEach(input => {
         input.addEventListener('keypress', function(e) {
@@ -1022,10 +939,47 @@
         });
       });
 
+      // ===== CURSOR PERSONALIZADO =====
+      const cursor = document.getElementById('customCursor');
+      let cursorVisible = false;
+
+      if (cursor && window.innerWidth > 768) {
+        document.addEventListener('mousemove', function(e) {
+          if (!cursorVisible) {
+            cursor.classList.add('visible');
+            cursorVisible = true;
+          }
+          cursor.style.left = e.clientX + 'px';
+          cursor.style.top = e.clientY + 'px';
+        });
+
+        const hoverTargets = document.querySelectorAll('.pinterest-item, .btn-toggle, .btn-export');
+        hoverTargets.forEach(target => {
+          target.addEventListener('mouseenter', function() {
+            cursor.classList.add('hover');
+            cursor.textContent = 'VER';
+          });
+          target.addEventListener('mouseleave', function() {
+            cursor.classList.remove('hover');
+            cursor.textContent = 'EXPLORAR';
+          });
+        });
+
+        document.addEventListener('mouseleave', function() {
+          cursor.classList.remove('visible');
+          cursorVisible = false;
+        });
+
+        document.addEventListener('mouseenter', function() {
+          cursor.classList.add('visible');
+          cursorVisible = true;
+        });
+      }
+
       // ===== INICIALIZAR =====
       loadData();
 
-      console.log('📌 Vertice Repositorio · Estilo Pinterest con loading');
+      console.log('📌 Vertice Repositorio · Con servidor CSV y animaciones');
     })();
   </script>
 </body>
