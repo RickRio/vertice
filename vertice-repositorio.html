@@ -160,22 +160,6 @@
       transform: rotate(90deg);
       border-color: #FDBB30;
     }
-    .btn-export {
-      background: rgba(253, 187, 48, 0.08);
-      border: 1px solid rgba(253, 187, 48, 0.1);
-      color: #FDBB30;
-      padding: 0.6rem 1.5rem;
-      border-radius: 40px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-family: 'Inter', sans-serif;
-    }
-    .btn-export:hover {
-      background: rgba(253, 187, 48, 0.15);
-      transform: scale(1.05);
-    }
 
     /* ===== FORMULARIO COLABSABLE ===== */
     .collapse-form {
@@ -538,9 +522,8 @@
       <small>Gestión de recursos · Vértice Collective</small>
     </h1>
 
-    <!-- ===== BOTONES ===== -->
+    <!-- ===== BOTÓN + ===== -->
     <div class="add-toggle">
-      <button class="btn-export" id="exportBtn">📥 Exportar CSV</button>
       <button class="btn-toggle" id="toggleFormBtn">+</button>
     </div>
 
@@ -633,12 +616,11 @@
 
       // ===== VARIABLES GLOBALES =====
       let galleryItems = [];
-      const API_URL = 'api/repositorio.php';
+      const API_URL = 'repositorio.php';
       const ADMIN_KEY = 'vertice2026';
 
       // ===== ELEMENTOS DOM =====
       const toggleBtn = document.getElementById('toggleFormBtn');
-      const exportBtn = document.getElementById('exportBtn');
       const formPanel = document.getElementById('addForm');
       const tipoSelect = document.getElementById('tipoSelect');
       const nombreInput = document.getElementById('nombreInput');
@@ -876,27 +858,6 @@
         }
       }
 
-      // ===== EXPORTAR CSV =====
-      async function exportCSV() {
-        try {
-          const response = await fetch(`${API_URL}?accion=exportar_csv`);
-          const result = await response.json();
-          if (result.success && result.csv) {
-            const blob = new Blob([result.csv], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `repositorio_${new Date().toISOString().slice(0,10)}.csv`;
-            link.click();
-            URL.revokeObjectURL(link.href);
-          } else {
-            alert('❌ Error al exportar: ' + (result.error || 'Sin datos'));
-          }
-        } catch (e) {
-          alert('❌ Error de conexión');
-          console.error(e);
-        }
-      }
-
       // ===== TABS =====
       tabs.forEach(tab => {
         tab.addEventListener('click', function() {
@@ -917,7 +878,6 @@
       });
 
       addBtn.addEventListener('click', addItem);
-      exportBtn.addEventListener('click', exportCSV);
 
       document.querySelectorAll('#nombreInput, #fechaInput, #mediaLink').forEach(input => {
         input.addEventListener('keypress', function(e) {
@@ -953,7 +913,7 @@
           cursor.style.top = e.clientY + 'px';
         });
 
-        const hoverTargets = document.querySelectorAll('.pinterest-item, .btn-toggle, .btn-export');
+        const hoverTargets = document.querySelectorAll('.pinterest-item, .btn-toggle');
         hoverTargets.forEach(target => {
           target.addEventListener('mouseenter', function() {
             cursor.classList.add('hover');
@@ -979,7 +939,7 @@
       // ===== INICIALIZAR =====
       loadData();
 
-      console.log('📌 Vertice Repositorio · Con servidor CSV y animaciones');
+      console.log('📌 Vertice Repositorio · Con Supabase');
     })();
   </script>
 </body>
