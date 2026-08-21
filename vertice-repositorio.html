@@ -596,351 +596,406 @@
 
   <!-- ===== JAVASCRIPT ===== -->
   <script>
-    (function() {
-      'use strict';
+  (function() {
+    'use strict';
 
-      // ===== LOADING OVERLAY =====
-      const loadingOverlay = document.getElementById('loadingOverlay');
+    // ============================================================
+    // 1. CONFIGURACIÓN DE SUPABASE
+    // ============================================================
+    // REEMPLAZA ESTOS VALORES CON LOS TUYOS
+    const SUPABASE_URL = 'https://tu-proyecto.supabase.co';
+    const SUPABASE_KEY = 'tu_anon_key';
+    const ADMIN_KEY = 'vertice2026';
 
-      function showLoading() {
-        loadingOverlay.classList.add('active');
-      }
+    // ============================================================
+    // 2. LOADING OVERLAY
+    // ============================================================
+    const loadingOverlay = document.getElementById('loadingOverlay');
 
-      function hideLoading() {
-        loadingOverlay.classList.remove('active');
-      }
+    function showLoading() {
+      loadingOverlay.classList.add('active');
+    }
 
-      window.addEventListener('load', function() {
-        setTimeout(hideLoading, 600);
-      });
+    function hideLoading() {
+      loadingOverlay.classList.remove('active');
+    }
 
-      // ===== VARIABLES GLOBALES =====
-      let galleryItems = [];
-      const API_URL = 'repositorio.php';
-      const ADMIN_KEY = 'vertice2026';
+    window.addEventListener('load', function() {
+      setTimeout(hideLoading, 600);
+    });
 
-      // ===== ELEMENTOS DOM =====
-      const toggleBtn = document.getElementById('toggleFormBtn');
-      const formPanel = document.getElementById('addForm');
-      const tipoSelect = document.getElementById('tipoSelect');
-      const nombreInput = document.getElementById('nombreInput');
-      const fechaInput = document.getElementById('fechaInput');
-      const mediaLink = document.getElementById('mediaLink');
-      const addBtn = document.getElementById('addMediaBtn');
+    // ============================================================
+    // 3. VARIABLES GLOBALES
+    // ============================================================
+    let galleryItems = [];
 
-      const containers = {
-        videos: document.getElementById('videosContainer'),
-        fotos: document.getElementById('fotosContainer'),
-        spots: document.getElementById('spotsContainer'),
-        manuales: document.getElementById('manualesContainer'),
-        posts: document.getElementById('postsContainer')
+    // ============================================================
+    // 4. ELEMENTOS DOM
+    // ============================================================
+    const toggleBtn = document.getElementById('toggleFormBtn');
+    const formPanel = document.getElementById('addForm');
+    const tipoSelect = document.getElementById('tipoSelect');
+    const nombreInput = document.getElementById('nombreInput');
+    const fechaInput = document.getElementById('fechaInput');
+    const mediaLink = document.getElementById('mediaLink');
+    const addBtn = document.getElementById('addMediaBtn');
+
+    const containers = {
+      videos: document.getElementById('videosContainer'),
+      fotos: document.getElementById('fotosContainer'),
+      spots: document.getElementById('spotsContainer'),
+      manuales: document.getElementById('manualesContainer'),
+      posts: document.getElementById('postsContainer')
+    };
+
+    const tabs = document.querySelectorAll('.tab');
+    const panes = document.querySelectorAll('.tab-pane');
+
+    // ============================================================
+    // 5. FUNCIÓN PARA CONECTAR A SUPABASE
+    // ============================================================
+    async function supabaseRequest(endpoint, options = {}) {
+      const url = `${SUPABASE_URL}/rest/v1/${endpoint}`;
+      const headers = {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
       };
 
-      const tabs = document.querySelectorAll('.tab');
-      const panes = document.querySelectorAll('.tab-pane');
-
-      // ===== DETECTAR PLATAFORMA Y ASPECT RATIO =====
-      function detectPlatform(url) {
-        if (!url) return { type: 'link', aspect: 'landscape', label: 'Enlace' };
-        if (url.includes('youtube.com') || url.includes('youtu.be')) return { type: 'youtube', aspect: 'youtube', label: 'YouTube' };
-        if (url.includes('vimeo.com')) return { type: 'vimeo', aspect: 'vimeo', label: 'Vimeo' };
-        if (url.includes('instagram.com/p/') || url.includes('instagram.com/reel/')) return { type: 'instagram', aspect: 'instagram', label: 'Instagram' };
-        if (url.includes('tiktok.com')) return { type: 'tiktok', aspect: 'tiktok', label: 'TikTok' };
-        if (url.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i)) return { type: 'image', aspect: 'landscape', label: 'Imagen' };
-        if (url.includes('linkedin.com')) return { type: 'linkedin', aspect: 'landscape', label: 'LinkedIn' };
-        return { type: 'link', aspect: 'landscape', label: 'Enlace' };
-      }
-
-      // ===== OBTENER HTML DE VISTA PREVIA =====
-      function getMediaHtml(url, alt) {
-        if (!url) return '<div style="padding:2rem;text-align:center;color:#333;">Sin enlace</div>';
-
-        const platform = detectPlatform(url);
-
-        switch (platform.type) {
-          case 'youtube':
-            let embedUrl = url;
-            if (url.includes('youtu.be')) {
-              const id = url.split('/').pop().split('?')[0];
-              embedUrl = `https://www.youtube.com/embed/${id}`;
-            }
-            if (url.includes('watch?v=')) {
-              const id = url.split('v=')[1].split('&')[0];
-              embedUrl = `https://www.youtube.com/embed/${id}`;
-            }
-            return `<iframe src="${embedUrl}" allowfullscreen loading="lazy"></iframe>`;
-          case 'vimeo':
-            const vimeoId = url.split('/').pop().split('?')[0];
-            return `<iframe src="https://player.vimeo.com/video/${vimeoId}" allowfullscreen loading="lazy"></iframe>`;
-          case 'image':
-            return `<img src="${url}" alt="${escapeHtml(alt)}" loading="lazy" onerror="this.src='https://placehold.co/600x400?text=Sin+preview'">`;
-          case 'instagram':
-            return `<div style="display:flex;align-items:center;justify-content:center;background:#0a1a2e;color:#555;flex-direction:column;gap:0.5rem;height:100%;padding:2rem;">
-                      <span style="font-size:3rem;">📸</span>
-                      <span style="font-size:0.7rem;">Instagram · Haz clic para ver</span>
-                    </div>`;
-          case 'tiktok':
-            return `<div style="display:flex;align-items:center;justify-content:center;background:#0a1a2e;color:#555;flex-direction:column;gap:0.5rem;height:100%;padding:2rem;">
-                      <span style="font-size:3rem;">🎵</span>
-                      <span style="font-size:0.7rem;">TikTok · Haz clic para ver</span>
-                    </div>`;
-          default:
-            return `<div style="display:flex;align-items:center;justify-content:center;background:#0a1a2e;color:#555;flex-direction:column;gap:0.5rem;height:100%;padding:2rem;">
-                      <span style="font-size:3rem;">🔗</span>
-                      <span style="font-size:0.7rem;">Abrir enlace</span>
-                    </div>`;
+      const config = {
+        ...options,
+        headers: {
+          ...headers,
+          ...(options.headers || {})
         }
-      }
+      };
 
-      function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-          if (m === '&') return '&amp;';
-          if (m === '<') return '&lt;';
-          if (m === '>') return '&gt;';
-          return m;
-        });
-      }
+      const response = await fetch(url, config);
+      return response;
+    }
 
-      // ===== CARGAR DATOS DESDE EL SERVIDOR =====
-      async function loadData() {
-        try {
-          const response = await fetch(`${API_URL}?accion=listar`);
-          const result = await response.json();
-          if (result.success) {
-            galleryItems = result.data;
-          } else {
-            console.error('Error al cargar datos:', result.error);
-            galleryItems = [];
+    // ============================================================
+    // 6. DETECTAR PLATAFORMA Y ASPECT RATIO
+    // ============================================================
+    function detectPlatform(url) {
+      if (!url) return { type: 'link', aspect: 'landscape', label: 'Enlace' };
+      if (url.includes('youtube.com') || url.includes('youtu.be')) return { type: 'youtube', aspect: 'youtube', label: 'YouTube' };
+      if (url.includes('vimeo.com')) return { type: 'vimeo', aspect: 'vimeo', label: 'Vimeo' };
+      if (url.includes('instagram.com/p/') || url.includes('instagram.com/reel/')) return { type: 'instagram', aspect: 'instagram', label: 'Instagram' };
+      if (url.includes('tiktok.com')) return { type: 'tiktok', aspect: 'tiktok', label: 'TikTok' };
+      if (url.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i)) return { type: 'image', aspect: 'landscape', label: 'Imagen' };
+      if (url.includes('linkedin.com')) return { type: 'linkedin', aspect: 'landscape', label: 'LinkedIn' };
+      return { type: 'link', aspect: 'landscape', label: 'Enlace' };
+    }
+
+    // ============================================================
+    // 7. OBTENER HTML DE VISTA PREVIA
+    // ============================================================
+    function getMediaHtml(url, alt) {
+      if (!url) return '<div style="padding:2rem;text-align:center;color:#333;">Sin enlace</div>';
+
+      const platform = detectPlatform(url);
+
+      switch (platform.type) {
+        case 'youtube':
+          let embedUrl = url;
+          if (url.includes('youtu.be')) {
+            const id = url.split('/').pop().split('?')[0];
+            embedUrl = `https://www.youtube.com/embed/${id}`;
           }
-        } catch (e) {
-          console.error('Error de conexión:', e);
+          if (url.includes('watch?v=')) {
+            const id = url.split('v=')[1].split('&')[0];
+            embedUrl = `https://www.youtube.com/embed/${id}`;
+          }
+          return `<iframe src="${embedUrl}" allowfullscreen loading="lazy"></iframe>`;
+        case 'vimeo':
+          const vimeoId = url.split('/').pop().split('?')[0];
+          return `<iframe src="https://player.vimeo.com/video/${vimeoId}" allowfullscreen loading="lazy"></iframe>`;
+        case 'image':
+          return `<img src="${url}" alt="${escapeHtml(alt)}" loading="lazy" onerror="this.src='https://placehold.co/600x400?text=Sin+preview'">`;
+        case 'instagram':
+          return `<div style="display:flex;align-items:center;justify-content:center;background:#0a1a2e;color:#555;flex-direction:column;gap:0.5rem;height:100%;padding:2rem;">
+                    <span style="font-size:3rem;">📸</span>
+                    <span style="font-size:0.7rem;">Instagram · Haz clic para ver</span>
+                  </div>`;
+        case 'tiktok':
+          return `<div style="display:flex;align-items:center;justify-content:center;background:#0a1a2e;color:#555;flex-direction:column;gap:0.5rem;height:100%;padding:2rem;">
+                    <span style="font-size:3rem;">🎵</span>
+                    <span style="font-size:0.7rem;">TikTok · Haz clic para ver</span>
+                  </div>`;
+        default:
+          return `<div style="display:flex;align-items:center;justify-content:center;background:#0a1a2e;color:#555;flex-direction:column;gap:0.5rem;height:100%;padding:2rem;">
+                    <span style="font-size:3rem;">🔗</span>
+                    <span style="font-size:0.7rem;">Abrir enlace</span>
+                  </div>`;
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+      });
+    }
+
+    // ============================================================
+    // 8. CARGAR DATOS DESDE SUPABASE
+    // ============================================================
+    async function loadData() {
+      try {
+        const response = await supabaseRequest('repositorio?order=id.desc');
+        if (response.ok) {
+          galleryItems = await response.json();
+        } else {
+          console.error('Error al cargar datos:', response.status);
           galleryItems = [];
         }
-        renderGalleries();
+      } catch (e) {
+        console.error('Error de conexión:', e);
+        galleryItems = [];
+      }
+      renderGalleries();
+    }
+
+    // ============================================================
+    // 9. RENDERIZAR GALERÍA
+    // ============================================================
+    function renderCategory(items, container, tipoLabel) {
+      if (!container) return;
+      if (!items || items.length === 0) {
+        container.innerHTML = `<div class="note">📭 No hay elementos en "${tipoLabel}".</div>`;
+        return;
       }
 
-      // ===== RENDERIZAR GALERÍA =====
-      function renderCategory(items, container, tipoLabel) {
-        if (!container) return;
-        if (!items || items.length === 0) {
-          container.innerHTML = `<div class="note">📭 No hay elementos en "${tipoLabel}".</div>`;
-          return;
-        }
+      let html = '';
+      items.forEach((item) => {
+        const platform = detectPlatform(item.url);
+        const mediaHtml = getMediaHtml(item.url, item.nombre);
+        const aspectClass = platform.aspect;
 
-        let html = '';
-        items.forEach((item) => {
-          const platform = detectPlatform(item.url);
-          const mediaHtml = getMediaHtml(item.url, item.nombre);
-          const aspectClass = platform.aspect;
-
-          html += `
-            <div class="pinterest-item" data-id="${item.id}">
-              <a href="${item.url}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;display:block;">
-                <div class="media-container ${aspectClass}">
-                  ${mediaHtml}
-                  <span class="platform-badge">${platform.label}</span>
-                </div>
-                <div class="item-info">
-                  <strong>${escapeHtml(item.nombre)}</strong>
-                  <p>${escapeHtml(item.fecha)}</p>
-                </div>
-              </a>
-              <div class="item-actions">
-                <a href="${item.url}" target="_blank" class="open-btn" rel="noopener noreferrer">🔗 Abrir</a>
-                <button class="delete-btn" data-id="${item.id}">🗑️ Eliminar</button>
+        html += `
+          <div class="pinterest-item" data-id="${item.id}">
+            <a href="${item.url}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;display:block;">
+              <div class="media-container ${aspectClass}">
+                ${mediaHtml}
+                <span class="platform-badge">${platform.label}</span>
               </div>
+              <div class="item-info">
+                <strong>${escapeHtml(item.nombre)}</strong>
+                <p>${escapeHtml(item.fecha)}</p>
+              </div>
+            </a>
+            <div class="item-actions">
+              <a href="${item.url}" target="_blank" class="open-btn" rel="noopener noreferrer">🔗 Abrir</a>
+              <button class="delete-btn" data-id="${item.id}">🗑️ Eliminar</button>
             </div>
-          `;
-        });
-
-        container.innerHTML = html;
-        attachDeleteEvents();
-      }
-
-      function renderGalleries() {
-        const tipos = {
-          videos: { items: galleryItems.filter(i => i.tipo === 'video'), label: 'Videos' },
-          fotos: { items: galleryItems.filter(i => i.tipo === 'foto'), label: 'Fotos' },
-          spots: { items: galleryItems.filter(i => i.tipo === 'spot'), label: 'Spots / Reels' },
-          manuales: { items: galleryItems.filter(i => i.tipo === 'manual'), label: 'Manuales' },
-          posts: { items: galleryItems.filter(i => i.tipo === 'post'), label: 'Posts' }
-        };
-
-        for (let key in tipos) {
-          renderCategory(tipos[key].items, containers[key], tipos[key].label);
-        }
-      }
-
-      // ===== ELIMINAR =====
-      function attachDeleteEvents() {
-        document.querySelectorAll('.delete-btn').forEach(btn => {
-          btn.removeEventListener('click', handleDelete);
-          btn.addEventListener('click', handleDelete);
-        });
-      }
-
-      async function handleDelete(e) {
-        e.stopPropagation();
-        const id = this.getAttribute('data-id');
-        if (!id) return;
-
-        const clave = prompt('🔐 Ingrese la clave para eliminar:');
-        if (!clave) return;
-
-        try {
-          const formData = new FormData();
-          formData.append('accion', 'eliminar');
-          formData.append('clave', clave);
-          formData.append('id', id);
-
-          const response = await fetch(API_URL, {
-            method: 'POST',
-            body: formData
-          });
-          const result = await response.json();
-
-          if (result.success) {
-            await loadData();
-            alert('✅ Elemento eliminado correctamente.');
-          } else {
-            alert('❌ Error: ' + (result.error || 'Clave incorrecta'));
-          }
-        } catch (e) {
-          alert('❌ Error de conexión');
-          console.error(e);
-        }
-      }
-
-      // ===== AGREGAR =====
-      async function addItem() {
-        const clave = prompt('🔐 Ingrese la clave de administrador:');
-        if (!clave) return;
-
-        const tipo = tipoSelect.value;
-        const nombre = nombreInput.value.trim();
-        const fecha = fechaInput.value.trim();
-        const url = mediaLink.value.trim();
-
-        if (!nombre || !fecha || !url) {
-          alert('⚠️ Completa todos los campos: nombre, fecha y enlace.');
-          return;
-        }
-
-        try {
-          const formData = new FormData();
-          formData.append('accion', 'agregar');
-          formData.append('clave', clave);
-          formData.append('tipo', tipo);
-          formData.append('nombre', nombre);
-          formData.append('fecha', fecha);
-          formData.append('url', url);
-
-          const response = await fetch(API_URL, {
-            method: 'POST',
-            body: formData
-          });
-          const result = await response.json();
-
-          if (result.success) {
-            nombreInput.value = '';
-            fechaInput.value = '';
-            mediaLink.value = '';
-            formPanel.classList.remove('visible');
-            await loadData();
-            alert('✅ Contenido agregado correctamente.');
-          } else {
-            alert('❌ Error: ' + (result.error || 'Clave incorrecta'));
-          }
-        } catch (e) {
-          alert('❌ Error de conexión');
-          console.error(e);
-        }
-      }
-
-      // ===== TABS =====
-      tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-          tabs.forEach(t => t.classList.remove('active'));
-          panes.forEach(p => p.classList.remove('active'));
-          this.classList.add('active');
-
-          const target = this.getAttribute('data-tab');
-          const targetPane = document.getElementById('tab' + target.charAt(0).toUpperCase() + target.slice(1));
-          if (targetPane) targetPane.classList.add('active');
-        });
+          </div>
+        `;
       });
 
-      // ===== EVENTOS =====
-      toggleBtn.addEventListener('click', () => {
-        formPanel.classList.toggle('visible');
-        toggleBtn.textContent = formPanel.classList.contains('visible') ? '✕' : '+';
+      container.innerHTML = html;
+      attachDeleteEvents();
+    }
+
+    function renderGalleries() {
+      const tipos = {
+        videos: { items: galleryItems.filter(i => i.tipo === 'video'), label: 'Videos' },
+        fotos: { items: galleryItems.filter(i => i.tipo === 'foto'), label: 'Fotos' },
+        spots: { items: galleryItems.filter(i => i.tipo === 'spot'), label: 'Spots / Reels' },
+        manuales: { items: galleryItems.filter(i => i.tipo === 'manual'), label: 'Manuales' },
+        posts: { items: galleryItems.filter(i => i.tipo === 'post'), label: 'Posts' }
+      };
+
+      for (let key in tipos) {
+        renderCategory(tipos[key].items, containers[key], tipos[key].label);
+      }
+    }
+
+    // ============================================================
+    // 10. ELIMINAR REGISTRO
+    // ============================================================
+    function attachDeleteEvents() {
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.removeEventListener('click', handleDelete);
+        btn.addEventListener('click', handleDelete);
       });
+    }
 
-      addBtn.addEventListener('click', addItem);
+    async function handleDelete(e) {
+      e.stopPropagation();
+      const id = this.getAttribute('data-id');
+      if (!id) return;
 
-      document.querySelectorAll('#nombreInput, #fechaInput, #mediaLink').forEach(input => {
-        input.addEventListener('keypress', function(e) {
-          if (e.key === 'Enter') addItem();
+      const clave = prompt('🔐 Ingrese la clave para eliminar:');
+      if (clave !== ADMIN_KEY) {
+        alert('❌ Clave incorrecta.');
+        return;
+      }
+
+      if (!confirm('¿Eliminar este elemento?')) return;
+
+      try {
+        const response = await supabaseRequest(`repositorio?id=eq.${id}`, {
+          method: 'DELETE'
         });
+
+        if (response.status === 204) {
+          await loadData();
+          alert('✅ Elemento eliminado correctamente.');
+        } else {
+          alert('❌ Error al eliminar: ' + response.status);
+        }
+      } catch (e) {
+        alert('❌ Error de conexión');
+        console.error(e);
+      }
+    }
+
+    // ============================================================
+    // 11. AGREGAR REGISTRO
+    // ============================================================
+    async function addItem() {
+      const clave = prompt('🔐 Ingrese la clave de administrador:');
+      if (clave !== ADMIN_KEY) {
+        alert('❌ Clave incorrecta.');
+        return;
+      }
+
+      const tipo = tipoSelect.value;
+      const nombre = nombreInput.value.trim();
+      const fecha = fechaInput.value.trim();
+      const url = mediaLink.value.trim();
+
+      if (!nombre || !fecha || !url) {
+        alert('⚠️ Completa todos los campos: nombre, fecha y enlace.');
+        return;
+      }
+
+      try {
+        const response = await supabaseRequest('repositorio', {
+          method: 'POST',
+          body: JSON.stringify({
+            tipo: tipo,
+            nombre: nombre,
+            fecha: fecha,
+            url: url
+          })
+        });
+
+        if (response.status === 201) {
+          nombreInput.value = '';
+          fechaInput.value = '';
+          mediaLink.value = '';
+          formPanel.classList.remove('visible');
+          await loadData();
+          alert('✅ Contenido agregado correctamente.');
+        } else {
+          const errorData = await response.text();
+          alert('❌ Error al agregar: ' + response.status + ' - ' + errorData);
+        }
+      } catch (e) {
+        alert('❌ Error de conexión');
+        console.error(e);
+      }
+    }
+
+    // ============================================================
+    // 12. TABS
+    // ============================================================
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        panes.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+
+        const target = this.getAttribute('data-tab');
+        const targetPane = document.getElementById('tab' + target.charAt(0).toUpperCase() + target.slice(1));
+        if (targetPane) targetPane.classList.add('active');
       });
+    });
 
-      // ===== NAVEGACIÓN CON LOADING =====
-      document.querySelectorAll('.nav-repo a, .logo-repo').forEach(link => {
-        link.addEventListener('click', function(e) {
-          const href = this.getAttribute('href');
-          if (href && href !== '#' && !href.startsWith('#')) {
-            e.preventDefault();
-            showLoading();
-            setTimeout(() => {
-              window.location.href = href;
-            }, 500);
-          }
-        });
+    // ============================================================
+    // 13. EVENTOS
+    // ============================================================
+    toggleBtn.addEventListener('click', () => {
+      formPanel.classList.toggle('visible');
+      toggleBtn.textContent = formPanel.classList.contains('visible') ? '✕' : '+';
+    });
+
+    addBtn.addEventListener('click', addItem);
+
+    document.querySelectorAll('#nombreInput, #fechaInput, #mediaLink').forEach(input => {
+      input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') addItem();
       });
+    });
 
-      // ===== CURSOR PERSONALIZADO =====
-      const cursor = document.getElementById('customCursor');
-      let cursorVisible = false;
+    // ============================================================
+    // 14. NAVEGACIÓN CON LOADING
+    // ============================================================
+    document.querySelectorAll('.nav-repo a, .logo-repo').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href && href !== '#' && !href.startsWith('#')) {
+          e.preventDefault();
+          showLoading();
+          setTimeout(() => {
+            window.location.href = href;
+          }, 500);
+        }
+      });
+    });
 
-      if (cursor && window.innerWidth > 768) {
-        document.addEventListener('mousemove', function(e) {
-          if (!cursorVisible) {
-            cursor.classList.add('visible');
-            cursorVisible = true;
-          }
-          cursor.style.left = e.clientX + 'px';
-          cursor.style.top = e.clientY + 'px';
-        });
+    // ============================================================
+    // 15. CURSOR PERSONALIZADO
+    // ============================================================
+    const cursor = document.getElementById('customCursor');
+    let cursorVisible = false;
 
-        const hoverTargets = document.querySelectorAll('.pinterest-item, .btn-toggle');
-        hoverTargets.forEach(target => {
-          target.addEventListener('mouseenter', function() {
-            cursor.classList.add('hover');
-            cursor.textContent = 'VER';
-          });
-          target.addEventListener('mouseleave', function() {
-            cursor.classList.remove('hover');
-            cursor.textContent = 'EXPLORAR';
-          });
-        });
-
-        document.addEventListener('mouseleave', function() {
-          cursor.classList.remove('visible');
-          cursorVisible = false;
-        });
-
-        document.addEventListener('mouseenter', function() {
+    if (cursor && window.innerWidth > 768) {
+      document.addEventListener('mousemove', function(e) {
+        if (!cursorVisible) {
           cursor.classList.add('visible');
           cursorVisible = true;
+        }
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      });
+
+      const hoverTargets = document.querySelectorAll('.pinterest-item, .btn-toggle');
+      hoverTargets.forEach(target => {
+        target.addEventListener('mouseenter', function() {
+          cursor.classList.add('hover');
+          cursor.textContent = 'VER';
         });
-      }
+        target.addEventListener('mouseleave', function() {
+          cursor.classList.remove('hover');
+          cursor.textContent = 'EXPLORAR';
+        });
+      });
 
-      // ===== INICIALIZAR =====
-      loadData();
+      document.addEventListener('mouseleave', function() {
+        cursor.classList.remove('visible');
+        cursorVisible = false;
+      });
 
-      console.log('📌 Vertice Repositorio · Con Supabase');
-    })();
-  </script>
+      document.addEventListener('mouseenter', function() {
+        cursor.classList.add('visible');
+        cursorVisible = true;
+      });
+    }
+
+    // ============================================================
+    // 16. INICIALIZAR
+    // ============================================================
+    loadData();
+
+    console.log('📌 Vertice Repositorio · Con Supabase (sin PHP)');
+  })();
+</script>
 </body>
 </html>
