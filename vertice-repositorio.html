@@ -540,7 +540,6 @@
             <option value="post">📱 Post / Publicación</option>
             <option value="proyecto">📌 Proyecto</option>
             <option value="articulo">📄 Artículo</option>
-            <option value="ponencia">🎤 Ponencia</option>
             <option value="producto">📦 Producto</option>
           </select>
         </div>
@@ -566,10 +565,10 @@
     <!-- ===== TABS ===== -->
     <div class="tab-bar">
       <div class="tab active" data-tab="videos">🎬 Videos</div>
-      <div class="tab" data-tab="fotos">📸 Fotos</div>
-      <div class="tab" data-tab="spots">📺 Spots / Reels</div>
-      <div class="tab" data-tab="manuales">📘 Manuales</div>
-      <div class="tab" data-tab="posts">📱 Posts</div>
+      <div class="tab" data-tab="fotos"> Fotos</div>
+      <div class="tab" data-tab="spots"> Spots / Reels</div>
+      <div class="tab" data-tab="manuales"> Manuales</div>
+      <div class="tab" data-tab="posts"> Posts</div>
     </div>
 
     <div id="tabVideos" class="tab-pane active"><div id="videosContainer" class="pinterest-grid"></div></div>
@@ -599,10 +598,6 @@
   (function() {
     'use strict';
 
-    // ============================================================
-    // 1. CONFIGURACIÓN DE SUPABASE
-    // ============================================================
-    // REEMPLAZA ESTOS VALORES CON LOS TUYOS
     const SUPABASE_URL = 'https://ufmhxpluzjgldzcojnzq.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVmbWh4cGx1empnbGR6Y29qbnpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyNjU0NjgsImV4cCI6MjEwMjg0MTQ2OH0.KDOQkkTW4oNWV_7Yp8r6XkCgaT_RafTWQTbje4O0nVQ';
     const ADMIN_KEY = 'vertice2026';
