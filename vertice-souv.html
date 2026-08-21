@@ -136,7 +136,7 @@
       font-family: 'Inter', sans-serif;
     }
 
-    /* ===== FILTROS / CATEGORÍAS ===== */
+    /* ===== FILTROS POR TIPO DE PRODUCTO ===== */
     .filter-bar {
       display: flex;
       gap: 0.5rem;
@@ -230,37 +230,17 @@
       object-fit: cover;
     }
 
-    /* ===== FORMATOS DE IMAGEN (aspect-ratio dinámico) ===== */
-    .pinterest-item .media-container.vertical {
-      aspect-ratio: 9 / 16;
-    }
-    .pinterest-item .media-container.vertical img {
-      object-fit: cover;
-      height: 100%;
-    }
+    /* ===== FORMATOS DE IMAGEN ===== */
+    .pinterest-item .media-container.vertical { aspect-ratio: 9 / 16; }
+    .pinterest-item .media-container.vertical img { object-fit: cover; height: 100%; }
+    .pinterest-item .media-container.horizontal { aspect-ratio: 16 / 9; }
+    .pinterest-item .media-container.square { aspect-ratio: 1 / 1; }
+    .pinterest-item .media-container.panoramic { aspect-ratio: 21 / 9; }
+    .pinterest-item .media-container.portrait { aspect-ratio: 3 / 4; }
+    .pinterest-item .media-container.landscape { aspect-ratio: 4 / 3; }
 
-    .pinterest-item .media-container.horizontal {
-      aspect-ratio: 16 / 9;
-    }
-
-    .pinterest-item .media-container.square {
-      aspect-ratio: 1 / 1;
-    }
-
-    .pinterest-item .media-container.panoramic {
-      aspect-ratio: 21 / 9;
-    }
-
-    .pinterest-item .media-container.portrait {
-      aspect-ratio: 3 / 4;
-    }
-
-    .pinterest-item .media-container.landscape {
-      aspect-ratio: 4 / 3;
-    }
-
-    /* ===== BADGE DE FORMATO ===== */
-    .pinterest-item .format-badge {
+    /* ===== BADGE DE TIPO ===== */
+    .pinterest-item .type-badge {
       position: absolute;
       top: 0.6rem;
       right: 0.6rem;
@@ -278,7 +258,7 @@
       font-family: 'Inter', sans-serif;
     }
 
-    /* ===== BOTÓN ELIMINAR (hover) ===== */
+    /* ===== BOTÓN ELIMINAR ===== */
     .pinterest-item .delete-btn {
       position: absolute;
       bottom: 0.8rem;
@@ -539,14 +519,15 @@
     </h1>
     <p class="souvenirs-sub">Diseños personalizados · Stickers · Lonas · Tarjetas · Merchandising</p>
 
-    <!-- ===== FILTROS ===== -->
+    <!-- ===== FILTROS POR TIPO DE PRODUCTO ===== -->
     <div class="filter-bar">
       <span class="filter-tab active" data-filter="todos">📦 Todos</span>
-      <span class="filter-tab" data-filter="vertical">📱 Vertical</span>
-      <span class="filter-tab" data-filter="horizontal">🖥️ Horizontal</span>
-      <span class="filter-tab" data-filter="square">⬜ Cuadrado</span>
-      <span class="filter-tab" data-filter="portrait">📸 Retrato</span>
-      <span class="filter-tab" data-filter="panoramic">🌅 Panorámico</span>
+      <span class="filter-tab" data-filter="sticker">🎨 Stickers</span>
+      <span class="filter-tab" data-filter="lona">🖼️ Lonas / Banners</span>
+      <span class="filter-tab" data-filter="tarjeta">💳 Tarjetas / Flyers</span>
+      <span class="filter-tab" data-filter="merch">👕 Merchandising</span>
+      <span class="filter-tab" data-filter="libro">📘 Libros / Revistas</span>
+      <span class="filter-tab" data-filter="packaging">📦 Packaging</span>
     </div>
 
     <!-- ===== BOTÓN + ===== -->
@@ -576,14 +557,13 @@
           <input type="text" id="nombreInput" placeholder="Ej: Sticker Pack 2026">
         </div>
         <div class="input-group">
-          <label>Formato</label>
+          <label>Formato de imagen</label>
           <select id="formatoSelect">
             <option value="vertical">📱 Vertical (9:16)</option>
             <option value="horizontal">🖥️ Horizontal (16:9)</option>
             <option value="square">⬜ Cuadrado (1:1)</option>
             <option value="portrait">📸 Retrato (3:4)</option>
             <option value="panoramic">🌅 Panorámico (21:9)</option>
-            <option value="landscape">🏞️ Paisaje (4:3)</option>
           </select>
         </div>
       </div>
@@ -594,7 +574,7 @@
         </div>
         <button class="btn" id="addMediaBtn">➕ Agregar</button>
       </div>
-      <p class="form-hint">* Se requiere clave para agregar contenido. Formatos: vertical, horizontal, square, portrait, panoramic.</p>
+      <p class="form-hint">* Se requiere clave para agregar contenido.</p>
     </div>
 
     <!-- ===== FOOTER ===== -->
@@ -674,36 +654,11 @@
       renderItems();
     }
 
-    // ===== DETECTAR FORMATO POR URL =====
-    function detectFormat(url) {
-      if (!url) return 'square';
-      // Si la URL tiene un parámetro de formato, usarlo
-      if (url.includes('format=')) {
-        const match = url.match(/format=([a-z]+)/);
-        if (match) return match[1];
-      }
-      // Si la imagen tiene dimensiones en la URL (ej: 600x900)
-      const dimMatch = url.match(/(\d+)x(\d+)/);
-      if (dimMatch) {
-        const w = parseInt(dimMatch[1]);
-        const h = parseInt(dimMatch[2]);
-        const ratio = w / h;
-        if (ratio > 1.5) return 'horizontal';
-        if (ratio < 0.6) return 'vertical';
-        if (ratio >= 0.9 && ratio <= 1.1) return 'square';
-        if (ratio > 0.6 && ratio < 0.9) return 'portrait';
-        if (ratio > 1.1 && ratio < 1.5) return 'landscape';
-        if (ratio > 2) return 'panoramic';
-        return 'square';
-      }
-      return 'square';
-    }
-
     // ===== RENDERIZAR =====
     function renderItems() {
       const filtered = currentFilter === 'todos'
         ? items
-        : items.filter(item => item.formato === currentFilter);
+        : items.filter(item => item.tipo === currentFilter);
 
       if (!filtered || filtered.length === 0) {
         container.innerHTML = `<div class="note">📭 No hay elementos en esta categoría.</div>`;
@@ -712,21 +667,32 @@
 
       let html = '';
       filtered.forEach((item) => {
-        const formato = item.formato || detectFormat(item.url);
+        const tipo = item.tipo || 'producto';
         const nombre = item.nombre || 'Sin nombre';
         const fecha = item.fecha || '';
-        const tipo = item.tipo || 'Producto';
+        const formato = item.formato || 'square';
+
+        // Emoji según tipo
+        const emojis = {
+          sticker: '🎨',
+          lona: '🖼️',
+          tarjeta: '💳',
+          merch: '👕',
+          libro: '📘',
+          packaging: '📦'
+        };
+        const emoji = emojis[tipo] || '📦';
 
         html += `
-          <div class="pinterest-item" data-id="${item.id}" data-formato="${formato}">
+          <div class="pinterest-item" data-id="${item.id}" data-tipo="${tipo}">
             <div class="item-info-top">
               <strong>${escapeHtml(nombre)}</strong>
-              <p>${escapeHtml(tipo)} ${fecha ? '· ' + escapeHtml(fecha) : ''}</p>
+              <p>${emoji} ${escapeHtml(tipo)} ${fecha ? '· ' + escapeHtml(fecha) : ''}</p>
             </div>
             <a href="${item.url}" target="_blank" rel="noopener noreferrer" style="display:block;text-decoration:none;color:inherit;">
               <div class="media-container ${formato}">
                 <img src="${item.url}" alt="${escapeHtml(nombre)}" loading="lazy" onerror="this.src='https://placehold.co/600x600/0a1a2e/666?text=Sin+imagen'">
-                <span class="format-badge">${formato}</span>
+                <span class="type-badge">${tipo}</span>
               </div>
             </a>
             <button class="delete-btn" data-id="${item.id}">🗑️ Eliminar</button>
@@ -792,7 +758,13 @@
       try {
         const response = await supabaseRequest(TABLE_NAME, {
           method: 'POST',
-          body: JSON.stringify({ tipo, nombre, fecha: new Date().toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }), formato, url })
+          body: JSON.stringify({
+            tipo,
+            nombre,
+            fecha: new Date().toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }),
+            formato,
+            url
+          })
         });
 
         if (response.status === 201) {
@@ -811,7 +783,7 @@
       }
     }
 
-    // ===== FILTROS =====
+    // ===== FILTROS POR TIPO =====
     filterTabs.forEach(tab => {
       tab.addEventListener('click', function() {
         filterTabs.forEach(t => t.classList.remove('active'));
@@ -863,7 +835,7 @@
 
     // ===== INICIALIZAR =====
     loadData();
-    console.log('📌 Vertice Souvenirs & Impresos · Con Supabase');
+    console.log('📌 Vertice Souvenirs & Impresos · Filtros por tipo de producto');
   })();
   </script>
 </body>
