@@ -22,10 +22,10 @@ $SUPABASE_KEY = getenv('SUPABASE_ANON_KEY') ?: getenv('STORAGE_ANON_KEY') ?: '';
 
 // Si no están definidas, puedes poner valores por defecto (solo para desarrollo local)
 if (empty($SUPABASE_URL)) {
-    $SUPABASE_URL = 'https://tu-proyecto.supabase.co';
+    $SUPABASE_URL = "https://ufmhxpluzjgldzcojnzq.supabase.co";
 }
 if (empty($SUPABASE_KEY)) {
-    $SUPABASE_KEY = 'tu_anon_key';
+    $SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVmbWh4cGx1empnbGR6Y29qbnpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyNjU0NjgsImV4cCI6MjEwMjg0MTQ2OH0.KDOQkkTW4oNWV_7Yp8r6XkCgaT_RafTWQTbje4O0nVQ";
 }
 
 // Clave de administrador (también puede venir de variable de entorno)
