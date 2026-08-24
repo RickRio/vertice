@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Producción - Cortometrajes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #1a1a2e;
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .form-group label .icon {
+            font-size: 1.1rem;
+        }
+
+        .form-group input {
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
+            border-color: #0f3460;
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(15, 52, 96, 0.1);
+        }
+
+        .form-group input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .form-group input[type="number"]::-webkit-outer-spin-button,
+        .form-group input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+
+        .section-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin: 22px 0 12px 0;
+            padding-bottom: 8px;
+            border-bottom: 3px solid #0f3460;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title .badge {
+            background: #0f3460;
+            color: white;
+            font-size: 0.65rem;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .clave-section {
+            background: #f0f2f5;
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin: 10px 0 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            border: 2px dashed #ccc;
+        }
+
+        .clave-section label {
+            font-weight: 600;
+            color: #1a1a2e;
+            font-size: 0.85rem;
+        }
+
+        .clave-section input {
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .clave-section input:focus {
+            border-color: #0f3460;
+            outline: none;
+        }
+
+        .clave-section .clave-status {
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .clave-section .clave-status.locked {
+            color: #ef4444;
+        }
+
+        .clave-section .clave-status.unlocked {
+            color: #22c55e;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 35px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0f3460, #1a1a2e);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(15, 52, 96, 0.3);
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+            transform: translateY(-2px);
+        }
+
+        .result-container {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            border-radius: 15px;
+            padding: 25px 30px;
+            color: white;
+            display: none;
+        }
+
+        .result-container.show {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .result-header h2 {
+            font-size: 1.3rem;
+        }
+
+        .total-amount {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+
+        .result-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+        }
+
+        .result-item {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 14px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .result-item .label {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .result-item .value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        .result-item .value.green {
+            color: #4ade80;
+        }
+        .result-item .value.blue {
+            color: #60a5fa;
+        }
+        .result-item .value.purple {
+            color: #c084fc;
+        }
+        .result-item .value.orange {
+            color: #fb923c;
+        }
+        .result-item .value.pink {
+            color: #f472b6;
+        }
+        .result-item .value.cyan {
+            color: #22d3ee;
+        }
+        .result-item .value.red {
+            color: #f87171;
+        }
+
+        .breakdown {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 0.85rem;
+            opacity: 0.9;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .breakdown-item .amount {
+            font-weight: 600;
+            color: #ffd700;
+        }
+
+        .gastos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .gastos-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f8f9fa;
+            padding: 6px 12px 6px 6px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .gastos-item .gasto-icon {
+            font-size: 1.2rem;
+        }
+
+        .gastos-item span {
+            font-size: 0.85rem;
+            flex: 1;
+        }
+
+        .gastos-item input {
+            width: 80px;
+            padding: 4px 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        .gastos-item input:focus {
+            border-color: #0f3460;
+            outline: none;
+        }
+
+        .gastos-item.otros {
+            grid-column: 1 / -1;
+            background: #e8edf4;
+            border-color: #0f3460;
+        }
+
+        .gastos-item.otros span {
+            font-weight: 600;
+        }
+
+        .gastos-item.otros input {
+            width: 120px;
+        }
+
+        .info-recargo {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 4px;
+            background: #f0f2f5;
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .bloqueado {
+            filter: blur(5px);
+            user-select: none;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .bloqueado-texto {
+            text-align: center;
+            padding: 8px;
+            color: #ffd700;
+            font-size: 0.85rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+            border: 1px dashed rgba(255, 215, 0, 0.3);
+            margin-top: 8px;
+        }
+
+        .bloqueado-texto .icono {
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 18px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .total-amount {
+                font-size: 2rem;
+            }
+            .btn {
+                flex: 1 1 100%;
+            }
+            .result-details {
+                grid-template-columns: 1fr 1fr;
+            }
+            .gastos-grid {
+                grid-template-columns: 1fr;
+            }
+            .gastos-item.otros {
+                grid-column: 1;
+            }
+            .clave-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 Calculadora de Producción</h1>
+        <p class="subtitle">Estimación de costos para tu cortometraje</p>
+
+        <!-- Clave para ver detalles -->
+        <div class="clave-section">
+            <label>🔑 Clave de acceso:</label>
+            <input type="password" id="claveInput" placeholder="Ingresa la clave para ver detalles">
+            <span class="clave-status locked" id="claveStatus">🔒 Bloqueado</span>
+            <button class="btn btn-secondary" style="flex:0;padding:8px 20px;min-width:auto;font-size:0.85rem;" onclick="verificarClave()">Verificar</button>
+        </div>
+
+        <!-- Sección 1: Datos principales -->
+        <div class="section-title">
+            📋 Datos de producción
+            <span class="badge">Obligatorio</span>
+        </div>
+
+        <div class="grid">
+            <div class="form-group">
+                <label><span class="icon">🎭</span> Número de actores</label>
+                <input type="number" id="actores" value="3" min="0" step="1">
+            </div>
+            <div class="form-group">
+                <label><span class="icon">📍</span> Total de locaciones</label>
+                <input type="number" id="locaciones" value="2" min="0" step="1">
+            </div>
+            <div class="form-group">
+                <label><span class="icon">⏱️</span> Duración final (minutos)</label>
+                <input type="number" id="duracion" value="10" min="1" step="0.5">
+            </div>
+            <div class="form-group">
+                <label><span class="icon">📅</span> Días de rodaje</label>
+                <input type="number" id="diasRodaje" value="4" min="1" step="1">
+            </div>
+        </div>
+
+        <!-- Sección 2: Gastos adicionales -->
+        <div class="section-title">
+            💰 Gastos adicionales
+            <span class="badge">Opcional</span>
+        </div>
+
+        <div class="gastos-grid">
+            <div class="gastos-item">
+                <span class="gasto-icon">👗</span>
+                <span>Vestuario</span>
+                <input type="number" id="gastoVestuario" value="0" min="0" step="10">
+            </div>
+            <div class="gastos-item">
+                <span class="gasto-icon">💄</span>
+                <span>Maquillaje</span>
+                <input type="number" id="gastoMaquillaje" value="0" min="0" step="10">
+            </div>
+            <div class="gastos-item">
+                <span class="gasto-icon">✨</span>
+                <span>Efectos especiales</span>
+                <input type="number" id="gastoEfectos" value="0" min="0" step="10">
+            </div>
+            <div class="gastos-item">
+                <span class="gasto-icon">🎵</span>
+                <span>Música original</span>
+                <input type="number" id="gastoMusica" value="0" min="0" step="10">
+            </div>
+            <div class="gastos-item">
+                <span class="gasto-icon">🍽️</span>
+                <span>Catering</span>
+                <input type="number" id="gastoCatering" value="0" min="0" step="10">
+            </div>
+            <div class="gastos-item">
+                <span class="gasto-icon">🚐</span>
+                <span>Transporte</span>
+                <input type="number" id="gastoTransporte" value="0" min="0" step="10">
+            </div>
+            <div class="gastos-item">
+                <span class="gasto-icon">🛡️</span>
+                <span>Seguros</span>
+                <input type="number" id="gastoSeguros" value="0" min="0" step="10">
+            </div>
+            <div class="gastos-item">
+                <span class="gasto-icon">📜</span>
+                <span>Permisos</span>
+                <input type="number" id="gastoPermisos" value="0" min="0" step="10">
+            </div>
+            <div class="gastos-item otros">
+                <span class="gasto-icon">➕</span>
+                <span>Otros gastos</span>
+                <input type="number" id="gastoOtros" value="0" min="0" step="10">
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="button-group">
+            <button class="btn btn-primary" onclick="calcular()">💰 Calcular presupuesto</button>
+            <button class="btn btn-secondary" onclick="limpiar()">🗑️ Limpiar todo</button>
+        </div>
+
+        <!-- Resultado -->
+        <div class="result-container" id="resultado">
+            <div class="result-header">
+                <h2>📊 Presupuesto estimado</h2>
+                <div class="total-amount" id="totalFinal">$0</div>
+            </div>
+            <div class="result-details" id="detallesResultado">
+                <!-- Se llena dinámicamente -->
+            </div>
+            <div class="breakdown" id="breakdownDetalles">
+                <!-- Se llena dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const CLAVE = "cl@ve";
+        let claveVerificada = false;
+
+        // Precios internos (solo visibles con clave)
+        const PRECIOS = {
+            actor: 30,
+            locacion: 20,
+            equipoTecnico: {
+                director: 50,
+                camarografo: 30,
+                sonidista: 20
+            },
+            edicionBase: 40,
+            edicionMinutosBase: 60
+        };
+
+        function verificarClave() {
+            const input = document.getElementById('claveInput');
+            const status = document.getElementById('claveStatus');
+            
+            if (input.value === CLAVE) {
+                claveVerificada = true;
+                status.textContent = '🔓 Desbloqueado';
+                status.className = 'clave-status unlocked';
+                input.style.borderColor = '#22c55e';
+                
+                // Si hay un resultado mostrado, actualizarlo
+                if (document.getElementById('resultado').classList.contains('show')) {
+                    calcular();
+                }
+            } else {
+                claveVerificada = false;
+                status.textContent = '🔒 Bloqueado';
+                status.className = 'clave-status locked';
+                input.style.borderColor = '#ef4444';
+                alert('Clave incorrecta');
+            }
+        }
+
+        // Verificar al presionar Enter en el campo de clave
+        document.getElementById('claveInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verificarClave();
+            }
+        });
+
+        function calcular() {
+            // --- OBTENER VALORES ---
+            const actores = parseInt(document.getElementById('actores').value) || 0;
+            const locaciones = parseInt(document.getElementById('locaciones').value) || 0;
+            const duracion = parseFloat(document.getElementById('duracion').value) || 0;
+            const diasRodaje = parseInt(document.getElementById('diasRodaje').value) || 0;
+
+            // Gastos adicionales
+            const gastos = {
+                vestuario: parseFloat(document.getElementById('gastoVestuario').value) || 0,
+                maquillaje: parseFloat(document.getElementById('gastoMaquillaje').value) || 0,
+                efectos: parseFloat(document.getElementById('gastoEfectos').value) || 0,
+                musica: parseFloat(document.getElementById('gastoMusica').value) || 0,
+                catering: parseFloat(document.getElementById('gastoCatering').value) || 0,
+                transporte: parseFloat(document.getElementById('gastoTransporte').value) || 0,
+                seguros: parseFloat(document.getElementById('gastoSeguros').value) || 0,
+                permisos: parseFloat(document.getElementById('gastoPermisos').value) || 0,
+                otros: parseFloat(document.getElementById('gastoOtros').value) || 0
+            };
+
+            // --- CÁLCULOS ---
+
+            // 1. Actores: $30 por actor por día
+            const costoActores = actores * PRECIOS.actor * diasRodaje;
+
+            // 2. Locaciones: $20 por locación TOTAL
+            const costoLocaciones = locaciones * PRECIOS.locacion;
+
+            // 3. Equipo técnico (Director + Camarógrafo + Sonidista) por día
+            const costoEquipoPorDia = PRECIOS.equipoTecnico.director + 
+                                      PRECIOS.equipoTecnico.camarografo + 
+                                      PRECIOS.equipoTecnico.sonidista;
+            const costoEquipo = costoEquipoPorDia * diasRodaje;
+
+            // 4. Edición: $40 hasta 60min, después recargo proporcional
+            let costoEdicion = PRECIOS.edicionBase;
+            let recargoInfo = 0;
+            if (duracion > PRECIOS.edicionMinutosBase) {
+                const minutosExtra = duracion - PRECIOS.edicionMinutosBase;
+                recargoInfo = Math.ceil(minutosExtra / 10) * 10;
+                costoEdicion = PRECIOS.edicionBase + recargoInfo;
+            }
+
+            // 5. Gastos adicionales
+            const totalGastos = Object.values(gastos).reduce((a, b) => a + b, 0);
+
+            // --- TOTAL ---
+            const subtotal = costoActores + costoLocaciones + costoEquipo + costoEdicion;
+            const total = subtotal + totalGastos;
+
+            // --- MOSTRAR RESULTADOS ---
+            mostrarResultado({
+                actores,
+                locaciones,
+                duracion,
+                diasRodaje,
+                costoActores,
+                costoLocaciones,
+                costoEquipo,
+                costoEquipoPorDia,
+                costoEdicion,
+                recargoInfo,
+                gastos,
+                totalGastos,
+                subtotal,
+                total
+            });
+        }
+
+        function mostrarResultado(d) {
+            const container = document.getElementById('resultado');
+            const totalElement = document.getElementById('totalFinal');
+            const detalles = document.getElementById('detallesResultado');
+            const breakdown = document.getElementById('breakdownDetalles');
+
+            container.classList.add('show');
+
+            const fmt = (n) => `$${n.toFixed(2)}`;
+
+            totalElement.textContent = fmt(d.total);
+
+            // Si la clave NO está verificada, mostrar solo información básica
+            if (!claveVerificada) {
+                detalles.innerHTML = `
+                    <div class="result-item">
+                        <div class="label">🎭 Actores</div>
+                        <div class="value blue">${d.actores}</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="label">📍 Locaciones</div>
+                        <div class="value green">${d.locaciones}</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="label">⏱️ Duración</div>
+                        <div class="value purple">${d.duracion} min</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="label">📅 Días de rodaje</div>
+                        <div class="value orange">${d.diasRodaje} días</div>
+                    </div>
+                `;
+
+                // Lista de gastos adicionales que tienen valor
+                let gastosActivos = [];
+                const nombresGastos = {
+                    vestuario: '👗 Vestuario',
+                    maquillaje: '💄 Maquillaje',
+                    efectos: '✨ Efectos especiales',
+                    musica: '🎵 Música original',
+                    catering: '🍽️ Catering',
+                    transporte: '🚐 Transporte',
+                    seguros: '🛡️ Seguros',
+                    permisos: '📜 Permisos',
+                    otros: '➕ Otros'
+                };
+
+                for (const [key, value] of Object.entries(d.gastos)) {
+                    if (value > 0) {
+                        gastosActivos.push(`${nombresGastos[key] || key}: ${fmt(value)}`);
+                    }
+                }
+
+                const gastosHTML = gastosActivos.length > 0
+                    ? gastosActivos.join(' | ')
+                    : 'Ninguno';
+
+                breakdown.innerHTML = `
+                    <div style="display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:12px;">
+                        <div class="breakdown-item">
+                            <span>💰 Gastos adicionales</span>
+                            <span class="amount">${fmt(d.totalGastos)}</span>
+                        </div>
+                        <div class="breakdown-item" style="border-bottom:2px solid rgba(255,215,0,0.3);">
+                            <span><strong>Subtotal</strong></span>
+                            <span class="amount">${fmt(d.subtotal)}</span>
+                        </div>
+                        <div class="breakdown-item" style="border-bottom:2px solid rgba(255,215,0,0.3);">
+                            <span><strong>Total gastos adicionales</strong></span>
+                            <span class="amount">${fmt(d.totalGastos)}</span>
+                        </div>
+                    </div>
+                    <div style="margin-top:8px;font-size:0.85rem;opacity:0.8;">
+                        <strong>Detalle gastos:</strong> ${gastosHTML}
+                    </div>
+                    <div class="bloqueado-texto">
+                        <span class="icono">🔒</span> Ingresa la clave para ver el desglose completo
+                    </div>
+                `;
+                return;
+            }
+
+            // --- SI LA CLAVE ESTÁ VERIFICADA, MOSTRAR TODO ---
+            detalles.innerHTML = `
+                <div class="result-item">
+                    <div class="label">🎭 Actores</div>
+                    <div class="value blue">${d.actores} × ${d.diasRodaje} días</div>
+                    <div style="font-size:0.8rem;opacity:0.7;">${fmt(d.costoActores)}</div>
+                </div>
+                <div class="result-item">
+                    <div class="label">📍 Locaciones</div>
+                    <div class="value green">${d.locaciones} total</div>
+                    <div style="font-size:0.8rem;opacity:0.7;">${fmt(d.costoLocaciones)}</div>
+                </div>
+                <div class="result-item">
+                    <div class="label">⏱️ Duración</div>
+                    <div class="value purple">${d.duracion} min</div>
+                    <div style="font-size:0.8rem;opacity:0.7;">${fmt(d.costoEdicion)}</div>
+                </div>
+                <div class="result-item">
+                    <div class="label">📅 Días de rodaje</div>
+                    <div class="value orange">${d.diasRodaje} días</div>
+                </div>
+                <div class="result-item" style="grid-column: span 2;">
+                    <div class="label">🎬 Equipo técnico (Director + Camarógrafo + Sonidista)</div>
+                    <div class="value pink">${d.diasRodaje} días × ${fmt(d.costoEquipoPorDia)}/día</div>
+                    <div style="font-size:0.8rem;opacity:0.7;">${fmt(d.costoEquipo)}</div>
+                </div>
+            `;
+
+            // Breakdown detallado
+            let gastosActivos = [];
+            const nombresGastos = {
+                vestuario: '👗 Vestuario',
+                maquillaje: '💄 Maquillaje',
+                efectos: '✨ Efectos especiales',
+                musica: '🎵 Música original',
+                catering: '🍽️ Catering',
+                transporte: '🚐 Transporte',
+                seguros: '🛡️ Seguros',
+                permisos: '📜 Permisos',
+                otros: '➕ Otros'
+            };
+
+            for (const [key, value] of Object.entries(d.gastos)) {
+                if (value > 0) {
+                    gastosActivos.push({
+                        nombre: nombresGastos[key] || key,
+                        valor: value
+                    });
+                }
+            }
+
+            const gastosListHTML = gastosActivos.length > 0
+                ? gastosActivos.map(g => 
+                    `<span style="background:rgba(255,255,255,0.1);padding:2px 12px;border-radius:12px;font-size:0.8rem;">${g.nombre}: ${fmt(g.valor)}</span>`
+                ).join(' ')
+                : '<span style="opacity:0.5;">No hay gastos adicionales</span>';
+
+            let edicionInfo = `Base $40 (hasta 60min)`;
+            if (d.duracion > 60) {
+                edicionInfo = `Base $40 + recargo $${d.recargoInfo} (${Math.ceil(d.duracion - 60)}min extra)`;
+            }
+
+            breakdown.innerHTML = `
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:6px;margin-bottom:12px;">
+                    <div class="breakdown-item">
+                        <span>🎭 Actores (${PRECIOS.actor}/día)</span>
+                        <span class="amount">${fmt(d.costoActores)}</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>📍 Locaciones (${PRECIOS.locacion} c/u)</span>
+                        <span class="amount">${fmt(d.costoLocaciones)}</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>🎬 Equipo técnico (${fmt(d.costoEquipoPorDia)}/día)</span>
+                        <span class="amount">${fmt(d.costoEquipo)}</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>✂️ Edición (${edicionInfo})</span>
+                        <span class="amount">${fmt(d.costoEdicion)}</span>
+                    </div>
+                    <div class="breakdown-item" style="border-bottom:2px solid rgba(255,215,0,0.3);">
+                        <span><strong>Subtotal</strong></span>
+                        <span class="amount">${fmt(d.subtotal)}</span>
+                    </div>
+                    <div class="breakdown-item" style="border-bottom:2px solid rgba(255,215,0,0.3);">
+                        <span><strong>Gastos adicionales</strong></span>
+                        <span class="amount">${fmt(d.totalGastos)}</span>
+                    </div>
+                </div>
+                <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;">
+                    ${gastosListHTML}
+                </div>
+                <div style="margin-top:12px;padding-top:12px;border-top:2px solid rgba(255,215,0,0.2);text-align:right;font-size:1.1rem;">
+                    <strong>TOTAL:</strong> <span style="color:#ffd700;font-size:1.4rem;">${fmt(d.total)}</span>
+                </div>
+            `;
+        }
+
+        function limpiar() {
+            document.getElementById('actores').value = 3;
+            document.getElementById('locaciones').value = 2;
+            document.getElementById('duracion').value = 10;
+            document.getElementById('diasRodaje').value = 4;
+
+            document.querySelectorAll('.gastos-item input[type="number"]').forEach(input => {
+                input.value = 0;
+            });
+
+            document.getElementById('resultado').classList.remove('show');
+        }
+    </script>
+</body>
+</html>
